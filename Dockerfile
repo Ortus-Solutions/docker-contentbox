@@ -3,7 +3,7 @@ FROM ortussolutions/commandbox:latest
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
 LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
-LABEL repository "https://github.com/Ortus-Solutions/docker-commandbox/contentbox"
+LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 
 # Copy over our app resources and build scripts
 COPY ./resources/app/ ${BUILD_DIR}/contentbox-app
