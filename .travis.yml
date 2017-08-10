@@ -12,6 +12,9 @@ env:
 services:
   - docker
 
+script:
+  - echo "Preparing to deploy!"
+
 deploy:
   skip_cleanup: true
   on:
