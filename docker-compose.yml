@@ -1,0 +1,31 @@
+# ContentBox Site
+  contentbox:
+    depends_on:
+      - db
+      - cache
+    image: ortussolutions/contentbox
+    container_name: "cb_site"
+    
+    # Environment Variables
+    environment:
+      cfconfig_adminPassword: contentbox
+      install: "true"
+      # Database Connection
+      #DB_CONNECTION_STRING: "jdbc:mysql://database:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true"
+      #DB_CLASS: "org.gjt.mm.mysql.Driver"
+      #DB_USER: "contentbox" 
+      #DB_PASSWORD: "contentbox"
+    # Ports
+    ports:
+      - "8080:8080"
+    # Data & Overrides
+    volumes:
+      # Persist HSQL Database
+      #- ./build/docker/contentbox-db:/data/contentbox/db
+      # Persist Media Manager
+      #- ./build/docker/contentbox-content:/app/includes/shared/media
+      # Overrides for Distributed Caching, make sure you use a centralized DB instead of HSQL
+      #- ./box.json:/app/box.json
+      #- ./config/CacheBox.cfc:/app/config/CacheBox.cfc
+      #- ./config/Coldbox.cfc:/app/config/Coldbox.cfc
+      #- ./modules_app:/app/modules_app

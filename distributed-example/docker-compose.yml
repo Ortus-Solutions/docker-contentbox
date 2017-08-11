@@ -1,0 +1,68 @@
+version: "3"
+
+services:
+
+  # Database
+  db:
+    image: mysql:latest  
+    container_name: "cb_database"
+    environment:
+       MYSQL_ROOT_PASSWORD: contentbox
+       MYSQL_DATABASE: contentbox
+       MYSQL_USER: contentbox
+       MYSQL_PASSWORD: contentbox
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./build/docker/mysql:/var/lib/mysql
+  
+  # Distributed Cache
+  cache:
+    image: redis
+    container_name: "cb_cache"
+    ports:
+        - "6379"
+    volumes:
+      - ./build/docker/redis:/data
+  
+  # ContentBox Site
+  contentbox:
+    depends_on:
+      - db
+      - cache
+    image: ortussolutions/contentbox
+    container_name: "cb_site"
+    
+    # Environment Variables
+    environment:
+      # Admin passowrd
+      cfconfig_adminPassword: contentbox
+      # Run installer on first run, then comment this out
+      install: "true"
+      # Distributed Cache Name: distributed -> Redis look in config/CacheBox.cfc
+      DISTRIBUTED_CACHE: distributed,
+      # Database Connection
+      DB_CONNECTION_STRING: "jdbc:mysql://database:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true"
+      DB_CLASS: "org.gjt.mm.mysql.Driver"
+      DB_USER: "contentbox" 
+      DB_PASSWORD: "contentbox"
+   
+    # Ports
+    ports:
+      - "8080:8080"
+   
+    # Data & Overrides
+    volumes:
+      # Persist HSQL Database
+      #- ./build/docker/contentbox-db:/data/contentbox/db
+      # Persist Media Manager
+      - ./build/docker/contentbox-content:/app/includes/shared/media
+      # Overrides for Distributed Caching, make sure you use a centralized DB instead of HSQL
+      - ./box.json:/app/box.json
+      - ./config/CacheBox.cfc:/app/config/CacheBox.cfc
+      - ./config/Coldbox.cfc:/app/config/Coldbox.cfc
+      # Uncomment for custom modules
+      #- ./modules_app:/app/modules_app
+    links:
+      - cache:distributed-cache
+      - db:database
