@@ -1,8 +1,8 @@
-# ContentBox Site
+# ContentBox Site Example with Docker Compose.
+version: "3"
+
+services:
   contentbox:
-    depends_on:
-      - db
-      - cache
     image: ortussolutions/contentbox
     container_name: "cb_site"
     
