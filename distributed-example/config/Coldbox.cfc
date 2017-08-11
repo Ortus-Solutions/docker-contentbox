@@ -113,15 +113,6 @@ component{
 		// Choose a distributed cache
 		var distributedCache = structKeyExists( systemEnv, "DISTRIBUTED_CACHE" ) ? systemEnv[ "DISTRIBUTED_CACHE" ] : "jdbc";
 		
-		// ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
-		storages = {
-		    // Cache Storage Settings
-		    cacheStorage = {
-		        cachename   = "sessions",
-		        timeout     = 60 // The default timeout of the session bucket, defaults to 60
-		    }
-		};
-
 		// ContentBox Runtime Overrides
 		"contentbox" = {
 			// Runtime Settings Override by site slug
