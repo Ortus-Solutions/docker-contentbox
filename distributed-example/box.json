@@ -3,7 +3,7 @@
     "version":"1.0.0",
     "author":"Ortus Solutions",
     "dependencies":{
-        "contentbox":"~3.7.0",
+        "contentbox":"~3.7.1",
         "coldbox":"^4.3.0",
         "cbredis":"^1.0.0+17"
     },

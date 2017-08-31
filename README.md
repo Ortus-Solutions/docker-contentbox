@@ -1,7 +1,7 @@
 Tags
 ======
 
-* `:latest`, `:3.7.0` - Latest stable version
+* `:latest`, `:3.7.1` - Latest stable version
 * `:snapshot` - Development/BE version of this image (Not of ContentBox)
 
 > Look in the tags section for other specific ContentBox versions
@@ -155,9 +155,9 @@ docker run -t -p 8080:8080 -e 'express=true' -e 'install=true' [hash]
 Once the hash is returned, you can use the following for publishing to the Ortus repos (If you have access)
 
 ```
-docker tag [hash] ortussolutions/contentbox:3.7.0
-docker tag ortussolutions/contentbox:3.7.0 ortussolutions/contentbox:latest
-docker tag ortussolutions/contentbox:3.7.0 ortussolutions/contentbox:snapshot
+docker tag [hash] ortussolutions/contentbox:3.7.1
+docker tag ortussolutions/contentbox:3.7.1 ortussolutions/contentbox:latest
+docker tag ortussolutions/contentbox:3.7.1 ortussolutions/contentbox:snapshot
 docker push ortussolutions/contentbox
 ```
 
