@@ -19,7 +19,7 @@ component{
 			appName 					= "ContentBox Modular CMS",
 
 			//Development Settings
-			reinitPassword				= structKeyExists( systemEnv, "FWREINIT_PW") ? systemEnv[ "FWREINIT_PW" ] : "@fwPassword@",
+			reinitPassword				= structKeyExists( systemEnv, "FWREINIT_PW" ) ? systemEnv[ "FWREINIT_PW" ] : "@fwPassword@",
 			handlersIndexAutoReload 	= false,
 
 			//Implicit Events
@@ -35,7 +35,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/modules_app" ],
+			modulesExternalLocation		= [],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -64,17 +64,7 @@ component{
 		environments = {
 		};
 
-		// Module Directives
-		modules = {
-			//Turn to false in production
-			autoReload = false,
-			// An array of modules names to load, empty means all of them
-			include = [],
-			// An array of modules names to NOT load, empty means none
-			exclude = []
-		};
-
-		//LogBox DSL
+		// LogBox DSL
 		logBox = {
 			// Define Appenders
 			appenders = {
@@ -84,16 +74,10 @@ component{
 			root = { levelmax="INFO", appenders="*" }
 		};
 
-		//Layout Settings
-		layoutSettings = {
-			defaultLayout = "",
-			defaultView   = ""
-		};
-
-		//Interceptor Settings
+		// Interceptor Settings
 		interceptorSettings = {
-			throwOnInvalidStates = false,
-			customInterceptionPoints = ""
+			throwOnInvalidStates 		= false,
+			customInterceptionPoints 	= ""
 		};
 
 		// ORM Module Configuration
@@ -113,7 +97,7 @@ component{
 		// Choose a distributed cache
 		var distributedCache = structKeyExists( systemEnv, "DISTRIBUTED_CACHE" ) ? systemEnv[ "DISTRIBUTED_CACHE" ] : "jdbc";
 		
-		// ContentBox relies on the Cache Storage for tracking sessions, which delegates to a Cache provider
+		// ContentBox relies on the Cache Storage for tracking sessions, which delegates to the `sessions` Cache provider
 		storages = {
 		    // Cache Storage Settings
 		    cacheStorage = {
@@ -150,15 +134,6 @@ component{
 			};
 		}
 
-		// Distributed Cache Storage
-		storages = {
-		    // Cache Storage Settings
-		    cacheStorage = {
-		        cachename   = distributedCache,
-		        timeout     = 120
-		    }
-		};
-
 	}
 
 	// ORTUS DEVELOPMENT ENVIRONMENT, REMOVE FOR YOUR APP IF NEEDED
@@ -188,7 +163,6 @@ component{
 		//logbox.debug 	= ["coldbox.system.interceptors.Security"];
 		//logbox.debug 	= [ "coldbox.system.aop" ];
 		//logbox.debug 	= [ "root" ];
-
 	}
 
 }
