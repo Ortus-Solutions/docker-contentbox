@@ -1,25 +1,19 @@
-Tags
-======
+## Tags
 
-* `:latest`, `:3.7.1` - Latest stable version
-* `:snapshot` - Development/BE version of this image (Not of ContentBox)
+* `:latest`, `:4.0.0` - Latest stable version
+* `:snapshot` - Development/BE version of this image (Not of ContentBox, for ContentBox BE use the env variable.)
 
 > Look in the tags section for other specific ContentBox versions
 
-Description 
-================
+## Description 
 
 ContentBox is a professional open source (Apache 2 License) modular content management engine that allows you to easily build websites, blogs, wikis, complex web applications and even power mobile or cloud applications. Built with a secure and flexible modular core, designed to scale, and combined with world-class support, ContentBox can be deployed to any Java server or ColdFusion (CFML) server.
 
 Learn more about ContentBox at https://www.ortussolutions.com/products/contentbox
 
-
-
-Usage
-================
+## Usage
 
 This section assumes you are using the [Official Docker Image](https://hub.docker.com/r/ortussolutions/contentbox/)
-
 
 To deploy a new application, first pull the image:
 
@@ -38,6 +32,8 @@ docker run -p 8080:8080 \
 
 
 A new container will be spun up from the image and, upon opening your browser to `http://[docker machine ip]:8080`, you will be directed to configure your [ContentBox](https://www.ortussolutions.com/products/contentbox) installation wizard.
+
+## Persisting Data
 
 This image is self-contained, which means it will be destroyed when the container is stopped.  To persist your data and shared files, you will need to provide a mount point to store your information.
 
@@ -60,8 +56,7 @@ Now once you've started up your image, you can walk through the initial configur
 
 See environment variables below for advanced database and shared asset configuration options.
 
-Environment Variables
-=====================
+## Environment Variables
 
 ContentBox allows you to pass a number of environment variables in to the image to allow for configuration of installation.
 
@@ -109,10 +104,12 @@ docker run -p 8080:8080 \
 
 You can see that these commands can become quite long.  As such, using Docker Compose or [CFConfig](https://www.gitbook.com/book/ortus/cfconfig-documentation/details) may provide a more workable alternative for your deployment environment.
 
+### Available Environment Variables
+
 Available environment variables, specific to the ContentBox image, include:
 
-* `express=true` - Uses an H2, in-memory database.  Useful for very small sites or for testing the image. See http://www.h2database.com/html/main.html
-* `install=true` (alias: `installer`) - Adds the installer module at runtime, to assit in configuring your installation.  You would omit this from your `run` command, once your database has been configured
+* `EXPRESS=true` - Uses an H2, in-memory database.  See http://www.h2database.com/html/main.html
+* `INSTALL=true` (alias: `installer`) - Adds the installer module at runtime, to assit in configuring your installation.  You would omit this from your `run` command, once your database has been configured
 * `BE=true` - Uses the bleeding edge snapshot of the ContentBox CMS, else we will defer to the latest stable version of ContentBox.
 * `FWREINIT_PW` - Allows you to specify the reinit password for the ColdBox framework
 * `SESSION_STORAGE` - Allows the customization of session storage.  Allows any valid `this.sessionStorage` value, available in [Application.cfc](http://docs.lucee.org/reference/tags/application.html).  By default it will use the JDBC connection to store your sessions in your database of choice.
@@ -121,24 +118,22 @@ Available environment variables, specific to the ContentBox image, include:
 * `contentbox_default_*` - All [Contentbox](https://www.ortussolutions.com/products/contentbox) "[Geek Settings](https://contentbox.ortusbooks.com/content/using/system/settings.html)" may be provided as environment variables, prefixed with `contentbox_default_`, allowing granular control of your ContentBox settings.  
 * `ORM_SECONDARY_CACHE` - If `true` it will activate the ORM secondary cash to the `ehcache` provider.  By default it is turned off.
 * `ORM_DIALECT` - You can choose the specific ORM dialect if needed, if not we will try to auto-detect it for you.
+* `HEADLESS=false` - If `true` then this image will not publish an Admin module, just the core, REST and UI modules.
 
 In addition, the CommandBox docker image environment variables are also available to use in your container.  For CommandBox image environment variable options, please read [the description text in `ortussolutions/commandbox`](https://hub.docker.com/r/ortussolutions/commandbox/). For additional information on using the CommandBox docker image, see [the initial release blog entry](https://www.ortussolutions.com/blog/commandbox-docker-image-360-released). 
 
 
-Distributed Cache
-================
+## Distributed Cache
 
 By default, this image is configured to use the connected database as a caching storage as well.  This will allow you to distribute your stack with pseudo-caching enabled.  
 
 However, if you would like to have a real distributed cache like Redis or Couchbase connected to your images, you will need to use the appropriate CacheBox providers and your own custom `CacheBox.cfc` configuration file.  For an example of using Redis, check out our compose repository: [https://github.com/Ortus-Solutions/docker-contentbox-distributed](https://github.com/Ortus-Solutions/docker-contentbox-distributed).
 
-Issues
-================
+## Issues
 
 Please submit issues to our repository: [https://github.com/Ortus-Solutions/docker-commandbox/issues](https://github.com/Ortus-Solutions/docker-commandbox/issues)
 
-Building Locally + Contributing
-===============================
+## Building Locally + Contributing
 
 You can use the following to build the image locally:
 
@@ -155,9 +150,15 @@ docker run -t -p 8080:8080 -e 'express=true' -e 'install=true' [hash]
 Once the hash is returned, you can use the following for publishing to the Ortus repos (If you have access)
 
 ```
-docker tag [hash] ortussolutions/contentbox:3.7.1
-docker tag ortussolutions/contentbox:3.7.1 ortussolutions/contentbox:latest
-docker tag ortussolutions/contentbox:3.7.1 ortussolutions/contentbox:snapshot
+docker tag [hash] ortussolutions/contentbox:4.0.0
+docker tag ortussolutions/contentbox:4.0.0 ortussolutions/contentbox:latest
+docker tag ortussolutions/contentbox:4.0.0 ortussolutions/contentbox:snapshot
 docker push ortussolutions/contentbox
 ```
 
+## Changelog
+
+### 2.3.0
+
+- Added support for ContentBox 4
+- Added new `HEADLESS` environment variable to deploy ContentBox with no admin

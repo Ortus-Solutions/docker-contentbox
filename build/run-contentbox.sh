@@ -2,7 +2,9 @@
 set -e
 
 cd $APP_DIR
-
+#######################################################################################
+# Express Edition
+#######################################################################################
 if [[ $express ]] || [[ $EXPRESS ]]; then
 
 	echo "INFO: Express installation specified.  Configuring H2 Database."
@@ -22,22 +24,36 @@ if [[ $express ]] || [[ $EXPRESS ]]; then
 
 fi
 
-# ContentBox Dependencies
-#echo "INFO: Installing ContentBox Dependencies."
-#box install
-
+#######################################################################################
+# Enabling Rewrites
+#######################################################################################
 if [[ ! -f ${APP_DIR}/server.json ]] || [[ $rewrites ]] || [[ $rewritesEnable ]]; then
 	echo "INFO: Enabling rewrites..."
 	box server set web.rewrites.enable=true
 fi
 
+#######################################################################################
+# INSTALLER
 # If our installer flag has not been passed, then remove that module
+#######################################################################################
 if [[ ! $installer ]] && [[ ! $install ]] && [[ ! $INSTALL ]]; then
 	echo "INFO: Removing installer..."
 	rm -rf ${APP_DIR}/modules/contentbox-installer
 fi
 
+#######################################################################################
+# HEADLESS
+# If true, then remove the contentbox admin
+#######################################################################################
+if [[ $HEADLESS ]]; then
+	echo "INFO: Removing admin module..."
+	rm -rf ${APP_DIR}/modules/contentbox/modules/contentbox-admin
+fi
+
+#######################################################################################
+# Media Directory
 # Check for path environment variables and then apply convention routes to them if not specified
+#######################################################################################
 if [[ ! $contentbox_default_cb_media_directoryRoot ]]; then
 	export contentbox_default_cb_media_directoryRoot=/app/includes/shared/media 
 fi
@@ -46,6 +62,9 @@ mkdir -p $contentbox_default_cb_media_directoryRoot
 
 echo "INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
 
+#######################################################################################
+# Prepare CommandBox
 # Now that we've set up contentbox, stand-up the rest with our normal CommandBox Build File
+#######################################################################################
 cd $BUILD_DIR
 ./run.sh

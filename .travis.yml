@@ -2,8 +2,8 @@ language: python
 
 env:
   global:
-    - IMAGE_VERSION=2.2.0
-    - CONTENTBOX_VERSION=3.7.1
+    - IMAGE_VERSION=2.3.0
+    - CONTENTBOX_VERSION=4.0.0
   matrix:
     - BUILD_IMAGE_DOCKERFILE=Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee4 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee45
