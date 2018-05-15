@@ -7,7 +7,7 @@
 */
 component{
 	// Application properties, modify as you see fit
-	this.name 				= "ContentBox" & hash( getCurrentTemplatePath() );
+	this.name 				= "ContentBox-Docker-" & hash( getCurrentTemplatePath() );
 	
 	// Add Environment Access
 	system = createObject( "java", "java.lang.System" );

@@ -27,7 +27,7 @@ fi
 #######################################################################################
 # Enabling Rewrites
 #######################################################################################
-if [[ ! -f ${APP_DIR}/server.json ]] || [[ $rewrites ]] || [[ $rewritesEnable ]]; then
+if [[ ! -f ${APP_DIR}/server.json ]]; then
 	echo "INFO: Enabling rewrites..."
 	box server set web.rewrites.enable=true
 fi
