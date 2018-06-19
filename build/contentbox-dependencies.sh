@@ -30,8 +30,6 @@ cp -rvf ${BUILD_DIR}/contentbox-app/* ${APP_DIR}
 
 # Finalize Build Dir
 rm -Rf ${BUILD_DIR}/contentbox-app
-rm -Rf ${BUILD_DIR}/contentbox-dependencies.sh
-rm -Rf ${BUILD_DIR}/run-contentbox.sh
 
 echo "Final Build Dir"
 cd $BUILD_DIR
