@@ -38,4 +38,10 @@ if [[ $BUILD_IMAGE_TAG == 'ortussolutions/contentbox' && $TRAVIS_BRANCH == 'mast
     docker push ${BUILD_IMAGE_TAG}:${CONTENTBOX_VERSION}
 fi
 
+# Version the Alpine Version
+if [[ $BUILD_IMAGE_TAG == 'ortussolutions/contentbox:alpine' && $TRAVIS_BRANCH == 'master' ]]; then
+    docker tag ${TRAVIS_COMMIT}:${TRAVIS_JOB_ID} ${BUILD_IMAGE_TAG}-${CONTENTBOX_VERSION}
+    docker push ${BUILD_IMAGE_TAG}-${CONTENTBOX_VERSION}
+fi
+
 echo "INFO: Image ${BUILD_IMAGE_TAG} successfully published"

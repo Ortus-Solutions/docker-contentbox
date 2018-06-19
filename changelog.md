@@ -1,6 +1,6 @@
 # Changelog
 
-## v2.5.0
+## v3.0.0
 
 * Optimize for size
 * Remove static healthcheck and just rely on the CommandBox image healthcheck, which makes more sense
@@ -11,6 +11,7 @@
 * Removed usage of lowercase `install`, `be`, and `express`, you must use uppercase env variables.
 * Added `lucee5` to snapshot releases
 * Renamed `HEADLESS` flag so we don't clash with the CommandBox image. New Setting is `REMOVE_CBADMIN`
+* Added Alpine version for ContentBox
 
 ## v2.4.0
 
