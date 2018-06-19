@@ -22,3 +22,6 @@ RUN ${BUILD_DIR}/contentbox-dependencies.sh
 
 # Run The build
 CMD ${BUILD_DIR}/run-contentbox.sh
+
+# Cleanup the Build Folder
+CMD rm -Rf ${BUILD_DIR}
