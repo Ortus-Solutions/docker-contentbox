@@ -43,10 +43,10 @@ if [[ ! $installer ]] && [[ ! $INSTALL ]]; then
 fi
 
 #######################################################################################
-# HEADLESS
+# REMOVE_CBADMIN
 # If true, then remove the contentbox admin
 #######################################################################################
-if [[ $HEADLESS ]] && [[ $HEADLESS == true ]]; then
+if [[ $REMOVE_CBADMIN ]] && [[ $REMOVE_CBADMIN == true ]]; then
 	echo "INFO: Removing admin module..."
 	rm -rf ${APP_DIR}/modules/contentbox/modules/contentbox-admin
 fi

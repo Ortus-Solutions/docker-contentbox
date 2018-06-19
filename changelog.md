@@ -10,6 +10,7 @@
 * `EXPRESS` and `HEADLESS` was not evaluated to a boolean, just existence 
 * Removed usage of lowercase `install`, `be`, and `express`, you must use uppercase env variables.
 * Added `lucee5` to snapshot releases
+* Renamed `HEADLESS` flag so we don't clash with the CommandBox image. New Setting is `REMOVE_CBADMIN`
 
 ## v2.4.0
 
