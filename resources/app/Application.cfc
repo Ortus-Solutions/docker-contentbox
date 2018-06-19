@@ -17,6 +17,7 @@ component{
 	this.sessionTimeout 	= createTimeSpan( 0, 1, 0, 0 );
 	// We can set our application timeout to a year, since restarting the Docker service will restart the server
 	this.applicationTimeout = createTimeSpan( 365, 0, 0, 0 );
+	// Get our storage from the system env
 	this.sessionStorage 	= structKeyExists( systemEnv, "SESSION_STORAGE" ) ? systemEnv[ "SESSION_STORAGE" ] : "contentbox";
 	this.sessionCluster 	= true;
 	this.setClientCookies 	= true;
@@ -62,11 +63,9 @@ component{
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
 		cfclocation=[ "models", "modules", "modules_app" ],
-		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE
-		//dialect 			= "MySQLwithInnoDB",
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
 		dbcreate = "update",
-		// FILL OUT: IF YOU WANT CHANGE SECONDARY CACHE, PLEASE UPDATE HERE
+		// GET SECONDARY CACHE FROM ENV VARIABLE
 		secondarycacheenabled = structKeyExists( systemEnv, "ORM_SECONDARY_CACHE" ) ? systemEnv[ "ORM_SECONDARY_CACHE" ] : false,
 		cacheprovider		= "EhCache",
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
@@ -79,6 +78,11 @@ component{
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
 		skipCFCWithError	= true
 	};
+
+	// Dialect Overrides via environment
+	if( structKeyExists( systemEnv, "ORM_DIALECT" ) ){
+		this.ormSettings[ "dialect" ] = systemEnv[ "ORM_DIALECT" ];
+	}
 
 	/************************************** METHODS *********************************************/
 

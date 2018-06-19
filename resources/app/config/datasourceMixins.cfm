@@ -1,10 +1,11 @@
 <cfscript>
 
-	systemEngine = structKeyExists( systemEnv, "CFENGINE" ) ? systemEnv[ "CFENGINE" ] : "lucee@4.5";
+	isExpress = systemEnv[ "EXPRESS" ] ?: false;
 
 	// Express H2SQL Database
-	if( structKeyExists( systemEnv, "express" ) || structKeyExists( systemEnv, "EXPRESS" ) ){
-		dbDirectory = structKeyExists( systemEnv, "H2_DIR" ) ? systemEnv[ "H2_DIR" ] : '/data/contentbox/db';
+	if( isExpress ){
+
+		dbDirectory = systemEnv[ "H2_DIR" ] ?: '/data/contentbox/db';
 		
 		datasourceConfig = {
 			class 			 	: 'org.h2.Driver',
@@ -82,15 +83,9 @@
 
 	}
 
-	// Dialect Overrides via environment
-	if( structKeyExists( systemEnv, "ORM_DIALECT" ) ){
-		this.ormSettings[ "dialect" ] = systemEnv[ "ORM_DIALECT" ];
-	}
-
-	//If a datasource configuration is defined, assign it.  Otherwise we'll assume it's been handled in another way
+	// If a datasource configuration is defined, assign it.  Otherwise we'll assume it's been handled in another way
 
 	if( !isNull( datasourceConfig ) ){
 		this.datasources[ "contentbox" ] = datasourceConfig;	
 	}
-
 </cfscript>

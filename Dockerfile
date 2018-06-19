@@ -1,4 +1,4 @@
-FROM ortussolutions/commandbox:latest
+FROM ortussolutions/commandbox:4.0.0
 
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
@@ -14,14 +14,11 @@ COPY ./build/run-contentbox.sh ${BUILD_DIR}/
 RUN chmod +x ${BUILD_DIR}/contentbox-dependencies.sh
 RUN chmod +x ${BUILD_DIR}/run-contentbox.sh
 
-#debug
-RUN ls -la ${BUILD_DIR}
+# debug
+#RUN ls -la ${BUILD_DIR}
 
 # Install dependencies
 RUN ${BUILD_DIR}/contentbox-dependencies.sh
-
-# Override our default healthcheck URI so the first CFML request doesn't load Coldbox and serves a static file
-ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/robots.txt"
 
 # Run The build
 CMD ${BUILD_DIR}/run-contentbox.sh

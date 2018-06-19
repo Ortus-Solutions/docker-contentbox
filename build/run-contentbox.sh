@@ -2,10 +2,11 @@
 set -e
 
 cd $APP_DIR
+
 #######################################################################################
 # Express Edition
 #######################################################################################
-if [[ $express ]] || [[ $EXPRESS ]]; then
+if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then
 
 	echo "INFO: Express installation specified.  Configuring H2 Database."
 
@@ -36,7 +37,7 @@ fi
 # INSTALLER
 # If our installer flag has not been passed, then remove that module
 #######################################################################################
-if [[ ! $installer ]] && [[ ! $install ]] && [[ ! $INSTALL ]]; then
+if [[ ! $installer ]] && [[ ! $INSTALL ]]; then
 	echo "INFO: Removing installer..."
 	rm -rf ${APP_DIR}/modules/contentbox-installer
 fi
@@ -45,7 +46,7 @@ fi
 # HEADLESS
 # If true, then remove the contentbox admin
 #######################################################################################
-if [[ $HEADLESS ]]; then
+if [[ $HEADLESS ]] && [[ $HEADLESS == true ]]; then
 	echo "INFO: Removing admin module..."
 	rm -rf ${APP_DIR}/modules/contentbox/modules/contentbox-admin
 fi

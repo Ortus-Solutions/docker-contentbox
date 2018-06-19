@@ -25,8 +25,8 @@ The image is packaged with a self-contained **express** version, which uses an i
 
 ```bash
 docker run -p 8080:8080 \
-	-e express=true \
-	-e install=true \
+	-e EXPRESS=true \
+	-e INSTALL=true \
 	ortussolutions/contentbox
 ```
 
@@ -39,13 +39,13 @@ This image is self-contained, which means it will be destroyed when the containe
 
 The directory `/app`, within the container, is mapped as the application web root.  Custom configurations, modules and directories can be mounted within the web root to customize your [ContentBox](https://www.ortussolutions.com/products/contentbox)/[Coldbox](https://www.ortussolutions.com/products/coldbox) installation.
 
-By convention, the `express` H2 database is stored at `/data/contentbox/db` inside the container.  In addition, the default storage location for the CMS user media assets is set to `/app/includes/shared/media`.   Let's mount both of those points, so that our database and user-uploaded assets persists between restarts:
+By convention, the express H2 database is stored at `/data/contentbox/db` inside the container.  In addition, the default storage location for the CMS user media assets is set to `/app/includes/shared/media`.   Let's mount both of those points, so that our database and user-uploaded assets persists between restarts:
 
 
 ```
 docker run -p 8080:8080 \
-	-e express=true \
-	-e install=true \
+	-e EXPRESS=true \
+	-e INSTALL=true \
 	-v `pwd`/contentbox-db:/data/contentbox/db \
 	-v `pwd`/contentbox-media:/app/includes/shared/media \
 	ortussolutions/contentbox
@@ -72,8 +72,8 @@ An example container `run` command, configuring a MySQL database would be execut
 
 ```
 docker run -p 8080:8080 \
-	-e 'express=true' \
-	-e 'installer=true' \
+	-e 'EXPRESS=true' \
+	-e 'INSTALL=true' \
 	-e 'cfconfig_adminPassword=myS3cur3P455' \
 	-e "DB_CONNECTION_STRING=jdbc:mysql://mysqlhost:3306/contentbox_docker?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true" \
 	-e 'DB_CLASS=org.gjt.mm.mysql.Driver' \
@@ -90,7 +90,7 @@ To use the `DB_DRIVER` syntax for Adobe Coldfusion, an example `run` command wou
 ```
 docker run -p 8080:8080 \
 	-e 'CFENGINE=adobe@11' \
-	-e 'installer=true' \
+	-e 'INSTALL=true' \
 	-e 'cfconfig_adminPassword=myS3cur3P455' \
 	-e 'DB_DRIVER=MSSQLServer' \
 	-e 'DB_HOST=sqlserver_host' \

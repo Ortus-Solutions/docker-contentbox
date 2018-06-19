@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-if [[ $BE ]] || [[ $be ]]; then
+if [[ $BE ]] && [[ $BE = true ]]; then
 	echo "INFO: Bleeding Edge installation specified."
 	cd ${APP_DIR} && box install contentbox-installer@be --production
 else 
@@ -23,13 +23,16 @@ echo "Copying over ContentBox Container Overrides"
 cp -rvf ${BUILD_DIR}/contentbox-app/* ${APP_DIR}
 
 # Debug the App Dir
-echo "Final App Dir"
-ls -la ${APP_DIR}
+#echo "Final App Dir"
+#ls -la ${APP_DIR}
 #cat ${APP_DIR}/Application.cfc
 #cat ${APP_DIR}/config/CacheBox.cfc
 
 # Finalize Build Dir
 rm -Rf ${BUILD_DIR}/contentbox-app
+rm -Rf ${BUILD_DIR}/contentbox-dependencies.sh
+rm -Rf ${BUILD_DIR}/run-contentbox.sh
+
 echo "Final Build Dir"
 cd $BUILD_DIR
 ls -la
