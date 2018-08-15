@@ -2,6 +2,7 @@
 
 ## v3.1.0
 
+* Updated CommandBox main image to 4.1.0
 * Upgrade to ContentBox v4.1.0
 * Removed legacy media root directory and leverage new custom module location: `/app/modules_app/contentbox-custom`
 * Added Adobe 2018 Tag

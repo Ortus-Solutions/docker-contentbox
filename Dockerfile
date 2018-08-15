@@ -1,4 +1,4 @@
-FROM ortussolutions/commandbox:4.0.0
+FROM ortussolutions/commandbox:4.1.0
 
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
