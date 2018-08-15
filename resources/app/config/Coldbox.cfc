@@ -76,7 +76,6 @@ component{
 
 		// Interceptor Settings
 		interceptorSettings = {
-			throwOnInvalidStates 		= false,
 			customInterceptionPoints 	= ""
 		};
 
@@ -90,8 +89,6 @@ component{
 
 		//Register interceptors as an array, we need order
 		interceptors = [
-			//SES
-			{ class="coldbox.system.interceptors.SES" }
 		];
 
 		// Choose a distributed cache

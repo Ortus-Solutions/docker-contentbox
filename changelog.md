@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.1.0
+
+* Upgrade to ContentBox v4.1.0
+* Removed legacy media root directory and leverage new custom module location: `/app/modules_app/contentbox-custom`
+* Added Adobe 2018 Tag
+
 ## v3.0.0
 
 * Optimize for size

@@ -56,7 +56,7 @@ fi
 # Check for path environment variables and then apply convention routes to them if not specified
 #######################################################################################
 if [[ ! $contentbox_default_cb_media_directoryRoot ]]; then
-	export contentbox_default_cb_media_directoryRoot=/app/includes/shared/media 
+	export contentbox_default_cb_media_directoryRoot=/app/modules_app/contentbox-custom/_content 
 fi
 # Create media directory, just in case.
 mkdir -p $contentbox_default_cb_media_directoryRoot

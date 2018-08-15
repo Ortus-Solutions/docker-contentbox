@@ -56,7 +56,7 @@ services:
       # Persist HSQL Database
       #- ./build/docker/contentbox-db:/data/contentbox/db
       # Persist Media Manager
-      - ./build/docker/contentbox-content:/app/includes/shared/media
+      - ./build/docker/contentbox-custom:/app/modules_app/contentbox-custom
       # Overrides for Distributed Caching, make sure you use a centralized DB instead of HSQL
       - ./box.json:/app/box.json
       - ./config/CacheBox.cfc:/app/config/CacheBox.cfc
