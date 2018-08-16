@@ -8,24 +8,49 @@ services:
     
     # Environment Variables
     environment:
-      cfconfig_adminPassword: contentbox
-      install: "true"
-      # Database Connection
+      CFCONFIG_ADMINPASSWORD: contentbox
+      INSTALL: "true"
+      EXPRESS: "true"
+      # Location of the H2 database within the container
+      #H2_DIR: "/data/contentbox/db"
+      # Use the Bleeding Edge version of ContentBox
+      #BE: "true"
+      # JVM Heap Size
+      #JVM_HEAPSIZE: 512
+      # HealthCheck URI
+      #HEALTHCHECK_URI: "http://127.0.0.1:8080/index.cfm"
+      # External Database Connection
       #DB_CONNECTION_STRING: "jdbc:mysql://database:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true"
       #DB_CLASS: "org.gjt.mm.mysql.Driver"
       #DB_USER: "contentbox" 
       #DB_PASSWORD: "contentbox"
+      # Framework Reinit Password
+      #FWREINIT_PW: "contentbox"
+      # Session Storage Location: Defaults to jdbc
+      #SESSION_STORAGE: memory, cookie, datasourceName, cacheName (jdbc)
+      # Distributed CacheBox cache region for distributing ContentBox content, flash, sitemaps, etc Default is jdbc
+      #DISTRIBUTED_CACHE: default, template or jdbc
+      # Turn on the ORM secondary cache via ehcache
+      #ORM_SECONDARY_CACHE: "false"
+      # The specific ORM dialect, use if you are using a specific external database
+      #ORM_DIALECT: 
+      # Remove the cbadmin module, so this becomes a headless ContentBox UI
+      #REMOVE_CBADMIN: false
     # Ports
     ports:
+      # HTTP
       - "8080:8080"
-    # Data & Overrides
+      # HTTPS
+      - "8443:8443"
+    # Mount Points
     volumes:
-      # Persist HSQL Database
+      # Persist H2 Database
       #- ./build/docker/contentbox-db:/data/contentbox/db
-      # Persist Custom Module
+      # Persist Custom Module (Themes, Widgets, Media, Modules)
       #- ./build/docker/contentbox-module:/app/modules_app/contentbox-custom
-      # Overrides for Distributed Caching, make sure you use a centralized DB instead of HSQL
+      # Overrides for Distributed Caching, make sure you use a centralized DB instead of H2
       #- ./box.json:/app/box.json
       #- ./config/CacheBox.cfc:/app/config/CacheBox.cfc
       #- ./config/Coldbox.cfc:/app/config/Coldbox.cfc
+      # Custom ColdBox Modules
       #- ./modules_app:/app/modules_app
