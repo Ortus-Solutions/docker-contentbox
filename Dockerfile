@@ -8,11 +8,12 @@ LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 # Copy over our app resources and build scripts
 COPY ./resources/app/ ${BUILD_DIR}/contentbox-app
 COPY ./build/contentbox-dependencies.sh ${BUILD_DIR}/
-COPY ./build/run-contentbox.sh ${BUILD_DIR}/
+COPY ./build/contentbox-setup.sh ${BUILD_DIR}/
+COPY ./build/contentbox-cleanup.sh ${BUILD_DIR}/
 
 # Make them executable just in case.
 RUN chmod +x ${BUILD_DIR}/contentbox-dependencies.sh
-RUN chmod +x ${BUILD_DIR}/run-contentbox.sh
+RUN chmod +x ${BUILD_DIR}/contentbox-setup.sh
 
 # debug
 #RUN ls -la ${BUILD_DIR}
@@ -21,7 +22,10 @@ RUN chmod +x ${BUILD_DIR}/run-contentbox.sh
 RUN ${BUILD_DIR}/contentbox-dependencies.sh
 
 # Run The build
-CMD ${BUILD_DIR}/run-contentbox.sh
+CMD ${BUILD_DIR}/contentbox-setup.sh
 
 # Warmup the Server
 RUN ${BUILD_DIR}/util/warmup-server.sh
+
+# Cleanup
+RUN ${BUILD_DIR}/contentbox-cleanup.sh
