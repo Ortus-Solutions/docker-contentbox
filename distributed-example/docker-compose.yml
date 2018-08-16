@@ -2,9 +2,9 @@ version: "3"
 
 services:
 
-  # Database
+  # Use a MySQL Container
   db:
-    image: mysql:latest  
+    image: mysql:5  
     container_name: "cb_database"
     environment:
        MYSQL_ROOT_PASSWORD: contentbox
@@ -16,7 +16,7 @@ services:
     volumes:
       - ./build/docker/mysql:/var/lib/mysql
   
-  # Distributed Cache
+  # Distributed Cache via Redis
   cache:
     image: redis
     container_name: "cb_cache"
@@ -36,11 +36,11 @@ services:
     # Environment Variables
     environment:
       # Admin passowrd
-      cfconfig_adminPassword: contentbox
+      CFCONFIG_ADMINPASSWORD: contentbox
       # Run installer on first run, then comment this out
-      install: "true"
+      INSTALL: "true"
       # Distributed Cache Name: distributed -> Redis look in config/CacheBox.cfc
-      DISTRIBUTED_CACHE: distributed,
+      DISTRIBUTED_CACHE: "distributed",
       # Database Connection
       DB_CONNECTION_STRING: "jdbc:mysql://database:3306/contentbox?useUnicode=true&characterEncoding=UTF-8&useLegacyDatetimeCode=true"
       DB_CLASS: "org.gjt.mm.mysql.Driver"
@@ -50,14 +50,13 @@ services:
     # Ports
     ports:
       - "8080:8080"
+      - "8443:8443"
    
     # Data & Overrides
     volumes:
-      # Persist HSQL Database
-      #- ./build/docker/contentbox-db:/data/contentbox/db
-      # Persist Media Manager
+      # Persist Custom Module
       - ./build/docker/contentbox-custom:/app/modules_app/contentbox-custom
-      # Overrides for Distributed Caching, make sure you use a centralized DB instead of HSQL
+      # Overrides for Distributed Caching
       - ./box.json:/app/box.json
       - ./config/CacheBox.cfc:/app/config/CacheBox.cfc
       - ./config/Coldbox.cfc:/app/config/Coldbox.cfc

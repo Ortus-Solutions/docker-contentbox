@@ -19,7 +19,7 @@ component{
 			appName 					= "ContentBox Modular CMS",
 
 			//Development Settings
-			reinitPassword				= structKeyExists( systemEnv, "FWREINIT_PW") ? systemEnv[ "FWREINIT_PW" ] : "@fwPassword@",
+			reinitPassword				= structKeyExists( systemEnv, "FWREINIT_PW" ) ? systemEnv[ "FWREINIT_PW" ] : "@fwPassword@",
 			handlersIndexAutoReload 	= false,
 
 			//Implicit Events
@@ -35,7 +35,7 @@ component{
 			//Extension Points
 			applicationHelper 			= "",
 			viewsHelper					= "",
-			modulesExternalLocation		= [ "/modules_app" ],
+			modulesExternalLocation		= [ "" ],
 			viewsExternalLocation		= "",
 			layoutsExternalLocation 	= "",
 			handlersExternalLocation  	= "",
@@ -64,16 +64,6 @@ component{
 		environments = {
 		};
 
-		// Module Directives
-		modules = {
-			//Turn to false in production
-			autoReload = false,
-			// An array of modules names to load, empty means all of them
-			include = [],
-			// An array of modules names to NOT load, empty means none
-			exclude = []
-		};
-
 		//LogBox DSL
 		logBox = {
 			// Define Appenders
@@ -92,7 +82,6 @@ component{
 
 		//Interceptor Settings
 		interceptorSettings = {
-			throwOnInvalidStates = false,
 			customInterceptionPoints = ""
 		};
 
@@ -111,7 +100,7 @@ component{
 		];
 
 		// Choose a distributed cache
-		var distributedCache = structKeyExists( systemEnv, "DISTRIBUTED_CACHE" ) ? systemEnv[ "DISTRIBUTED_CACHE" ] : "jdbc";
+		var distributedCache = structKeyExists( systemEnv, "DISTRIBUTED_CACHE" ) ? systemEnv[ "DISTRIBUTED_CACHE" ] : "distributed";
 		
 		// ContentBox Runtime Overrides
 		"contentbox" = {

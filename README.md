@@ -145,6 +145,7 @@ A number of environment variables, specific to the ContentBox image, are availab
 * `ORM_SECONDARY_CACHE` - If `true` it will activate the ORM secondary cash to the `ehcache` provider. By default it is turned off.
 * `ORM_DIALECT` - You can choose the specific ORM dialect if needed, if not we will try to auto-detect it for you.
 * `REMOVE_CBADMIN=false` - If `true` then this image will not publish an Admin module, just the core, REST and UI modules.
+* `JVM_HEAPSIZE=512` - The amount in megabytes to assign the JVM running ContentBox. We default it to 512mb.
 
 In addition, the [CommandBox docker image](https://hub.docker.com/r/ortussolutions/commandbox/) environment variables are also available to use in your container. For additional information on using the CommandBox docker image, see [the initial release blog entry](https://www.ortussolutions.com/blog/commandbox-docker-image-360-released).
 
@@ -158,7 +159,7 @@ You can also use the `SESSION_STORAGE` environment variable to switch the connec
 
 By default, our image configures a `jdbc` CacheBox cache region that will be used to distribute settings, sessions, flash data, content, RSS feeds, sitemaps, etc. This means that out-of-the-box, your ContentBox containers can use the database to distribute its content within a swarm or set of services. However, if you would like to use your own CacheBox providers or a more sophisticated distributed cache like Redis or Couchbase, you can.
 
-We have also prepared a docker compose and distribution example using Redis \(more caches to come\) and the ContentBox image. This example will allow you to have a stack that can easily distribute your sessions and content via Redis. You can find the repository here: [https://github.com/Ortus-Solutions/docker-contentbox-distributed](https://github.com/Ortus-Solutions/docker-contentbox-distributed)
+We have also prepared a docker compose and distribution example using Redis \(more caches to come\) and the ContentBox image. This example will allow you to have a stack that can easily distribute your sessions and content via Redis. You can find the repository in this repo under the folder: [distributed-example](https://github.com/Ortus-Solutions/docker-contentbox/tree/development/distributed-example)
 
 ## Healthchecks
 
@@ -179,7 +180,7 @@ docker build --no-cache -f ./Dockerfile ./
 You can test the image built correctly:
 
 ```
-docker run -t -p 8080:8080 -e 'express=true' -e 'install=true' [hash]
+docker run -t -p 8080:8080 -e 'EXPRESS=true' -e 'INSTALL=true' [hash]
 ```
 
 Once the hash is returned, you can use the following for publishing to the Ortus repos (If you have access)
