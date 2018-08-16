@@ -89,6 +89,7 @@ component{
 
 		//Register interceptors as an array, we need order
 		interceptors = [
+			{ class="coldbox.system.interceptors.SES" }
 		];
 
 		// Choose a distributed cache
