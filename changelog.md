@@ -2,10 +2,12 @@
 
 ## v3.1.0
 
-* Updated CommandBox main image to 4.1.0
+* Added new environment variables to control heap size: `JVM_HEAPSIZE` which defaults to `512mb`
+* Updated CommandBox main image to 4.2.0
 * Upgrade to ContentBox v4.1.0
 * Removed legacy media root directory and leverage new custom module location: `/app/modules_app/contentbox-custom`
 * Added Adobe 2018 Tag
+* Updated distributed example with Redis
 
 ## v3.0.0
 

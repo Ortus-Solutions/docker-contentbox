@@ -1,4 +1,4 @@
-FROM ortussolutions/commandbox:4.1.0
+FROM ortussolutions/commandbox:4.2.0
 
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
@@ -22,3 +22,6 @@ RUN ${BUILD_DIR}/contentbox-dependencies.sh
 
 # Run The build
 CMD ${BUILD_DIR}/run-contentbox.sh
+
+# Warmup the Server
+RUN ${BUILD_DIR}/util/warmup-server.sh
