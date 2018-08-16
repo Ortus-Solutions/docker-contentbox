@@ -10,6 +10,7 @@ COPY ./resources/app/ ${BUILD_DIR}/contentbox-app
 COPY ./build/contentbox-dependencies.sh ${BUILD_DIR}/
 COPY ./build/contentbox-setup.sh ${BUILD_DIR}/
 COPY ./build/contentbox-cleanup.sh ${BUILD_DIR}/
+COPY ./build/apt-cleanup.sh ${BUILD_DIR}/
 
 # Make them executable just in case.
 RUN chmod +x ${BUILD_DIR}/contentbox-dependencies.sh
@@ -29,3 +30,4 @@ RUN ${BUILD_DIR}/util/warmup-server.sh
 
 # Cleanup
 RUN ${BUILD_DIR}/contentbox-cleanup.sh
+RUN ${BUILD_DIR}/apt-cleanup.sh
