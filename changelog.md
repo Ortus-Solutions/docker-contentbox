@@ -3,6 +3,8 @@
 ## v3.1.3
 
 * Adding healtcheck URIs back again
+* Removed redundant calls to CommandBox layer
+* Added warmup servers to main tags due to lucee orm bug.
 
 ## v3.1.2
 

@@ -37,5 +37,6 @@ HEALTHCHECK --interval=20s --timeout=30s --retries=15 CMD curl --fail ${HEALTHCH
 
 # Apt Cleanup
 #RUN ${BUILD_DIR}/apt-cleanup.sh
+
 # Warmup the Server
-#RUN ${BUILD_DIR}/util/warmup-server.sh
+RUN ${BUILD_DIR}/util/warmup-server.sh
