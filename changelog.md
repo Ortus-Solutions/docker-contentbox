@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.1
+
+* Remove some cleanup scripts to avoid issues
+
 ## v3.1.0
 
 * Added new environment variables to control heap size: `JVM_HEAPSIZE` which defaults to `512mb`

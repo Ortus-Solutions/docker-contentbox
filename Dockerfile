@@ -25,9 +25,11 @@ RUN ${BUILD_DIR}/contentbox-dependencies.sh
 # Run The build
 CMD ${BUILD_DIR}/contentbox-setup.sh
 
+# Apt Cleanup
+RUN ${BUILD_DIR}/apt-cleanup.sh
+
 # Warmup the Server
 RUN ${BUILD_DIR}/util/warmup-server.sh
 
 # Cleanup
 RUN ${BUILD_DIR}/contentbox-cleanup.sh
-RUN ${BUILD_DIR}/apt-cleanup.sh

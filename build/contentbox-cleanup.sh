@@ -6,6 +6,3 @@ set -e
 #######################################################################################
 # Cleanup CommandBox files
 rm -rf /root/.CommandBox/temp/*.* /root/.CommandBox/cfml/system/mdCache/*.* /root/.CommandBox/cfml/system/config/server-icons/*.*
-
-# Remove Unecessary OS FIles
-rm -rf /usr/share/icons /usr/share/doc /usr/share/man /usr/share/locale /tmp/*.*
