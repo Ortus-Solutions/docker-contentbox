@@ -1,5 +1,11 @@
 # Changelog
 
+## v3.1.2
+
+* Don't warm up servers to reduce image size
+* Add Adobe 11, 2018 images that where not running
+* Tag versions of each of the warmed up engines, instead of just latest
+
 ## v3.1.1
 
 * Remove some cleanup scripts to avoid issues

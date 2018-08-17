@@ -2,7 +2,7 @@ language: python
 
 env:
   global:
-    - IMAGE_VERSION=3.1.1
+    - IMAGE_VERSION=3.1.2
     - CONTENTBOX_VERSION=4.1.0
   matrix:
     # Ubuntu Based
@@ -12,7 +12,9 @@ env:
     # Specific Servers
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee4 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee45
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee5 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
+    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe11 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe11
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe2016 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016
+    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe2018 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2018
 
 services:
   - docker

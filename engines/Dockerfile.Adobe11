@@ -1,5 +1,6 @@
 FROM ortussolutions/contentbox:latest
 
+LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
 LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
 LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"

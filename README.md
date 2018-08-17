@@ -8,8 +8,31 @@ Learn more about ContentBox at https://www.ortussolutions.com/products/contentbo
 
 ## Tags
 
-* `:latest`, `:4.1.0` - Latest stable version
-* `:snapshot` - Development/BE version of this image (Not of ContentBox, for ContentBox BE use the environment variable `BE`.)
+We have our tags divided by either production or bleeding edge container images. Please choose wisely :muscle:
+
+### Production Tags
+
+The following tags are based off our `master` branch and are production-ready images.  The version number matches the release of ContentBox
+
+* `:latest`, `:4.1.0` - Latest stable version of ContentBox = `4.1.0`
+* `:alpine-{version}` - Latest stable version based off Alpine Linux
+* `:lucee5-{version}` - Latest stable version of this image with Lucee 5 warmed up
+* `:lucee45-{version}` - Latest stable version of this image with Lucee 4.5 warmed up
+* `:adobe2018-{version}` - Latest stable version of this image with Adobe 2018 warmed up
+* `:adobe2016-{version}` - Latest stable version of this image with Adobe 2016 warmed up
+* `:adobe11-{version}` - Latest stable version of this image with Adobe 11 warmed up
+  
+### Development Tags
+
+The following tags are based off our `development` branch. These are bleeding edge container images that we use for testing until they are promoted to production tags.
+
+* `:snapshot` - Development version of this image (Not of ContentBox, for ContentBox BE use the environment variable `BE`.)
+* `:alpine-snapshot` - Development version of this image based on Alpine Linux
+* `:lucee5-snapshot` - Development version of this image with Lucee 5 warmed up
+* `:lucee45-snapshot` - Development version of this image with Lucee 4.5 warmed up
+* `:adobe2018-snapshot` - Development version of this image with Adobe 2018 warmed up
+* `:adobe2016-snapshot` - Development version of this image with Adobe 2016 warmed up
+* `:adobe11-snapshot` - Development version of this image with Adobe 11 warmed up
 
 > **Tip:** Look in the tags section for other specific ContentBox versions
 
