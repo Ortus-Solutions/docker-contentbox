@@ -1,5 +1,9 @@
 # Changelog
 
+## v3.1.3
+
+* Adding healtcheck URIs back again
+
 ## v3.1.2
 
 * Don't warm up servers to reduce image size

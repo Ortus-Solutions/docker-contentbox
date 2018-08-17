@@ -1,5 +1,6 @@
 FROM ortussolutions/commandbox:4.2.0
 
+# Labels
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
 LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
@@ -19,17 +20,22 @@ RUN chmod +x ${BUILD_DIR}/contentbox-setup.sh
 # debug
 #RUN ls -la ${BUILD_DIR}
 
-# Install dependencies
+# Install ContentBox deps
 RUN ${BUILD_DIR}/contentbox-dependencies.sh
 
 # Run The build
 CMD ${BUILD_DIR}/contentbox-setup.sh
 
-# Apt Cleanup
-RUN ${BUILD_DIR}/apt-cleanup.sh
-
-# Warmup the Server
-#RUN ${BUILD_DIR}/util/warmup-server.sh
-
 # Cleanup
 RUN ${BUILD_DIR}/contentbox-cleanup.sh
+
+# Healthcheck environment variables
+ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/index.cfm"
+
+# Our healthcheck interval doesn't allow dynamic intervals - Default is 20s intervals with 15 retries
+HEALTHCHECK --interval=20s --timeout=30s --retries=15 CMD curl --fail ${HEALTHCHECK_URI} || exit 1
+
+# Apt Cleanup
+#RUN ${BUILD_DIR}/apt-cleanup.sh
+# Warmup the Server
+#RUN ${BUILD_DIR}/util/warmup-server.sh

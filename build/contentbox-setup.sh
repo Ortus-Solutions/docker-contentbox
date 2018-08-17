@@ -62,10 +62,3 @@ fi
 mkdir -p $contentbox_default_cb_media_directoryRoot
 
 echo "INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
-
-#######################################################################################
-# Prepare CommandBox
-# Now that we've set up contentbox, stand-up the rest with our normal CommandBox Build File
-#######################################################################################
-cd $BUILD_DIR
-./run.sh

@@ -1,5 +1,6 @@
 FROM ortussolutions/commandbox:alpine
 
+# Labels
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"
 LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
@@ -26,3 +27,9 @@ CMD ${BUILD_DIR}/contentbox-setup.sh
 
 # Cleanup
 RUN ${BUILD_DIR}/contentbox-cleanup.sh
+
+# Healthcheck environment variables
+ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/index.cfm"
+
+# Our healthcheck interval doesn't allow dynamic intervals - Default is 20s intervals with 15 retries
+HEALTHCHECK --interval=20s --timeout=30s --retries=15 CMD curl --fail ${HEALTHCHECK_URI} || exit 1
