@@ -1,5 +1,12 @@
 # Changelog
 
+## v4.0.0
+
+* Disabled directory browsing
+* Added docker hostname to Application name in Application.cfc
+* Added a rolling file appender for all app logs to go to > `/var/log/contentbox.log`
+
+
 ## v3.1.3
 
 * Adding healtcheck URIs back again
