@@ -184,7 +184,7 @@ We have also prepared a docker compose and distribution example using Redis \(mo
 
 ## Healthchecks
 
-The image contains built-in capabilities for healthchecks for the running application. You can customize the URL entry point by using the `HEALTHCHECK_URI` environment variable. By default, this is set `http://127.0.0.1:${PORT}/` at 30s intervals with 15 retries and a timeout of 45s.
+The image contains built-in capabilities for healthchecks for the running application. You can customize the URL entry point by using the `HEALTHCHECK_URI` environment variable. By default, this is set `http://127.0.0.1:${PORT}/` at 30s intervals with 15 retries and a timeout of 60s.
 
 ## Issues
 

@@ -68,7 +68,15 @@ component{
 		logBox = {
 			// Define Appenders
 			appenders = {
-				console = { class="coldbox.system.logging.appenders.ConsoleAppender" }
+				console = { class="coldbox.system.logging.appenders.ConsoleAppender" },
+				file 	= {
+					class 		= "coldbox.system.logging.appenders.RollingFileAppender",
+					properties 	= {
+						filename 	= "contentbox",
+						filePath	= "/var/log/",
+						autoExpand 	= false
+					}
+				}
 			},
 			// Root Logger
 			root = { levelmax="INFO", appenders="*" }
