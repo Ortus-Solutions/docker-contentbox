@@ -72,8 +72,8 @@ component{
 				file 	= {
 					class 		= "coldbox.system.logging.appenders.RollingFileAppender",
 					properties 	= {
-						filename 	= "contentbox", 
-						filePath	= "/var/log"
+						filename 	= "contentbox",
+						filePath	= expandPath( "/var/log/" )
 					}
 				}
 			},
@@ -136,6 +136,21 @@ component{
 			    inflateToPRC = false,
 			    autoPurge = true,
 			    autoSave = true
+			};
+		}
+
+		// Mail settings for writing to log files instead of sending mail on dev.
+		if( structKeyExists( systemEnv, "ORTUS_DEV" ) ){
+			mailSettings = {
+				from 		= "info@ortussolutions.com",
+				to 			= "info@ortussolutions.com",
+				type 		= "HTML",
+				protocol = {
+					class = "cbmailservices.models.protocols.FileProtocol",
+					properties = {
+						filePath = "logs"
+					}
+				}
 			};
 		}
 

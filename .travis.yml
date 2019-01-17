@@ -2,8 +2,8 @@ language: python
 
 env:
   global:
-    - IMAGE_VERSION=3.1.3
-    - CONTENTBOX_VERSION=4.1.0
+    - IMAGE_VERSION=4.0.0
+    - CONTENTBOX_VERSION=4.2.1
   matrix:
     # Ubuntu Based
     - BUILD_IMAGE_DOCKERFILE=Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox
@@ -29,4 +29,4 @@ deploy:
       - master
       - development
   provider: script
-  script: ./resources/publish.sh
+  script: ./resources/build.sh

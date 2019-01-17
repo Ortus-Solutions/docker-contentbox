@@ -1,14 +1,14 @@
 #!/bin/bash
 set -e
 
-cd $APP_DIR
+cd ${APP_DIR}
 
 #######################################################################################
 # Express Edition
 #######################################################################################
 if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then
 
-	echo "INFO: Express installation specified.  Configuring H2 Database."
+	echo ">INFO: Express installation specified.  Configuring H2 Database."
 
 	if [[ ! $H2_DIR ]]; then
 		export H2_DIR=/data/contentbox/db
@@ -16,7 +16,7 @@ if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then
 		mkdir -p ${H2_DIR}
 	fi
 
-	echo "INFO: H2 Database set to ${H2_DIR}"
+	echo ">INFO: H2 Database set to ${H2_DIR}"
 
 	#check for a lock file and remove it so we can start up
 	if [[ -f ${H2_DIR}/contentbox.lck ]]; then
@@ -29,7 +29,7 @@ fi
 # Enabling Rewrites
 #######################################################################################
 if [[ ! -f ${APP_DIR}/server.json ]]; then
-	echo "INFO: Enabling rewrites..."
+	echo ">INFO: Enabling rewrites..."
 	box server set web.rewrites.enable=true
 fi
 
@@ -37,8 +37,8 @@ fi
 # INSTALLER
 # If our installer flag has not been passed, then remove that module
 #######################################################################################
-if [[ ! $installer ]] && [[ ! $INSTALL ]]; then
-	echo "INFO: Removing installer..."
+if [[ ! $INSTALL ]] || [[ $INSTALL == false ]]; then
+	echo ">INFO: Removing installer..."
 	rm -rf ${APP_DIR}/modules/contentbox-installer
 fi
 
@@ -47,7 +47,7 @@ fi
 # If true, then remove the contentbox admin
 #######################################################################################
 if [[ $REMOVE_CBADMIN ]] && [[ $REMOVE_CBADMIN == true ]]; then
-	echo "INFO: Removing admin module..."
+	echo ">INFO: Removing admin module..."
 	rm -rf ${APP_DIR}/modules/contentbox/modules/contentbox-admin
 fi
 
@@ -60,5 +60,8 @@ if [[ ! $contentbox_default_cb_media_directoryRoot ]]; then
 fi
 # Create media directory, just in case.
 mkdir -p $contentbox_default_cb_media_directoryRoot
+echo ">INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
+echo "==> ContentBox Environment Finalized"
 
-echo "INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
+# Run CommandBox Now
+${BUILD_DIR}/run.sh

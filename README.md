@@ -14,7 +14,7 @@ We have our tags divided by either production or bleeding edge container images.
 
 The following tags are based off our `master` branch and are production-ready images.  The version number matches the release of ContentBox
 
-* `:latest`, `:4.1.0` - Latest stable version of ContentBox = `4.1.0`
+* `:latest`, `:4.2.1` - Latest stable version of ContentBox = `4.2.1`
 * `:alpine-{version}` - Latest stable version based off Alpine Linux
 * `:lucee5-{version}` - Latest stable version of this image with Lucee 5 warmed up
 * `:lucee45-{version}` - Latest stable version of this image with Lucee 4.5 warmed up
@@ -209,8 +209,8 @@ docker run -t -p 8080:8080 -e 'EXPRESS=true' -e 'INSTALL=true' [hash]
 Once the hash is returned, you can use the following for publishing to the Ortus repos (If you have access)
 
 ```
-docker tag [hash] ortussolutions/contentbox:4.1.0
-docker tag ortussolutions/contentbox:4.1.0 ortussolutions/contentbox:latest
-docker tag ortussolutions/contentbox:4.1.0 ortussolutions/contentbox:snapshot
+docker tag [hash] ortussolutions/contentbox:4.2.1
+docker tag ortussolutions/contentbox:4.2.1 ortussolutions/contentbox:latest
+docker tag ortussolutions/contentbox:4.2.1 ortussolutions/contentbox:snapshot
 docker push ortussolutions/contentbox
 ```

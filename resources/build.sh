@@ -4,17 +4,21 @@ set -e
 cd $TRAVIS_BUILD_DIR
 
 echo "CWD: $PWD"
-echo "Dockerfile: $TRAVIS_BUILD_DIR/${BUILD_IMAGE_DOCKERFILE}"
+echo "Dockerfile: ${TRAVIS_BUILD_DIR}/${BUILD_IMAGE_DOCKERFILE}"
 
 # Push Version into Images: $IMAGE_VERSION IS SET IN TRAVIS
 sed -i -e "s/@version@/$IMAGE_VERSION/g" $TRAVIS_BUILD_DIR/${BUILD_IMAGE_DOCKERFILE}
 
 # Build Base Image
-docker build --no-cache -t ${TRAVIS_COMMIT}:${TRAVIS_JOB_ID} -f $TRAVIS_BUILD_DIR/${BUILD_IMAGE_DOCKERFILE} $TRAVIS_BUILD_DIR/
+docker build --no-cache \
+    -t ${TRAVIS_COMMIT}:${TRAVIS_JOB_ID} \
+    --build-arg CI_BUILD_NUMBER="${TRAVIS_BUILD_NUMBER}" \
+    --build-arg CI_BUILD_URL="${TRAVIS_BUILD_WEB_URL}" \
+    -f $TRAVIS_BUILD_DIR/${BUILD_IMAGE_DOCKERFILE} $TRAVIS_BUILD_DIR/
 echo "INFO: Docker image successfully built"
 
 # Log in to Docker Hub
-docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
+docker login -u ${DOCKER_HUB_USERNAME} -p ${DOCKER_HUB_PASSWORD}
 echo "INFO: Successfully logged in to Docker Hub!"
 
 # Do Appropriate Tagging
@@ -46,3 +50,5 @@ fi
 docker tag ${TRAVIS_COMMIT}:${TRAVIS_JOB_ID} ${BUILD_IMAGE_TAG}
 # Push our new image and tags to the registry
 docker push ${BUILD_IMAGE_TAG}
+
+echo "Voila! ContentBox Dockerized!"

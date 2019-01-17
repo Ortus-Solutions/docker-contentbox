@@ -1,12 +1,19 @@
 #!/bin/bash
 set -e
 
+cd ${APP_DIR}
+
+# Create Image Version File
+TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
+echo ">INFO: Creating Image Version File - ${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
+echo "${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
+
 if [[ $BE ]] && [[ $BE = true ]]; then
-	echo "INFO: Bleeding Edge installation specified."
-	cd ${APP_DIR} && box install contentbox-installer@be --production
+	echo ">INFO: Bleeding Edge installation specified."
+	box install contentbox-installer@be --production
 else 
-	echo "INFO: Latest Stable Release installation specified."
-	cd ${APP_DIR} && box install contentbox-installer --production
+	echo ">INFO: Latest Stable Release installation specified."
+	box install contentbox-installer --production
 fi;
 
 # Remove DSN creator no need to use it
@@ -19,7 +26,7 @@ mkdir -p ${APP_DIR}/modules_app
 rm -f ${APP_DIR}/server.json
 
 # Copy over our resources
-echo "Copying over ContentBox Container Overrides"
+echo ">INFO: Copying over ContentBox Container Overrides"
 cp -rvf ${BUILD_DIR}/contentbox-app/* ${APP_DIR}
 
 # Debug the App Dir
@@ -28,9 +35,17 @@ cp -rvf ${BUILD_DIR}/contentbox-app/* ${APP_DIR}
 #cat ${APP_DIR}/Application.cfc
 #cat ${APP_DIR}/config/CacheBox.cfc
 
-# Finalize Build Dir
-rm -Rf ${BUILD_DIR}/contentbox-app
+# Cleanup copied resources
+echo ">INFO: Cleanup resources"
+rm -Rfv ${BUILD_DIR}/contentbox-app
 
-echo "Final Build Dir"
-cd $BUILD_DIR
-ls -la
+# Debug LS
+ls -la ${APP_DIR}
+echo "==> ContentBox and dependencies installed"
+
+#######################################################################################
+# WARM UP THE ENGINE
+#######################################################################################
+${BUILD_DIR}/util/warmup-server.sh
+
+echo "==> Engine Warmup Complete!"
