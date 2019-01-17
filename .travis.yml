@@ -10,7 +10,6 @@ env:
     # Alpine Based
     - BUILD_IMAGE_DOCKERFILE=Dockerfile.alpine BUILD_IMAGE_TAG=ortussolutions/contentbox:alpine
     # Specific Servers
-    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee4 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee45
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee5 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe11 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe11
     - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe2016 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016

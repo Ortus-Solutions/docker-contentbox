@@ -8,6 +8,7 @@
 * Upgrade to latest CommandBox v4.5.0
 * Updated healthchecks to permit load up times
 * No flags where ever being used, revamped it to warmup the server correctly and leverage environment variables for execution
+* Removed support for lucee 4.5
 
 ## v3.1.3
 

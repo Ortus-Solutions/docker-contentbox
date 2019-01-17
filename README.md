@@ -2,7 +2,7 @@
 
 ContentBox is a professional open source (Apache 2 License) **modular** content management engine that allows you to easily build websites, blogs, wikis, complex web applications and even power mobile or cloud applications with it's built in RESTFul services. Built with a secure and flexible modular core, designed to scale, and combined with world-class support, ContentBox can be deployed to any Java server or ColdFusion (CFML) server.
 
-> **Tip:** ContentBox is powered by the ColdBox MVC Framework and Hibernate ORM.
+> **Tip:** ContentBox is powered by the ColdBox HMVC Framework and Hibernate ORM.
 
 Learn more about ContentBox at https://www.ortussolutions.com/products/contentbox and more about Docker deployment here: https://contentbox.ortusbooks.com/getting-started/installation/docker
 
@@ -12,12 +12,11 @@ We have our tags divided by either production or bleeding edge container images.
 
 ### Production Tags
 
-The following tags are based off our `master` branch and are production-ready images.  The version number matches the release of ContentBox
+The following tags are based off our image's `master` branch and are production-ready images.  The version number matches the release of ContentBox
 
-* `:latest`, `:4.2.1` - Latest stable version of ContentBox = `4.2.1`
+* `:latest`, `:4.2.1` - Latest stable version of ContentBox `4.2.1`
 * `:alpine-{version}` - Latest stable version based off Alpine Linux
 * `:lucee5-{version}` - Latest stable version of this image with Lucee 5 warmed up
-* `:lucee45-{version}` - Latest stable version of this image with Lucee 4.5 warmed up
 * `:adobe2018-{version}` - Latest stable version of this image with Adobe 2018 warmed up
 * `:adobe2016-{version}` - Latest stable version of this image with Adobe 2016 warmed up
 * `:adobe11-{version}` - Latest stable version of this image with Adobe 11 warmed up
@@ -29,7 +28,6 @@ The following tags are based off our `development` branch. These are bleeding ed
 * `:snapshot` - Development version of this image (Not of ContentBox, for ContentBox BE use the environment variable `BE`.)
 * `:alpine-snapshot` - Development version of this image based on Alpine Linux
 * `:lucee5-snapshot` - Development version of this image with Lucee 5 warmed up
-* `:lucee45-snapshot` - Development version of this image with Lucee 4.5 warmed up
 * `:adobe2018-snapshot` - Development version of this image with Adobe 2018 warmed up
 * `:adobe2016-snapshot` - Development version of this image with Adobe 2016 warmed up
 * `:adobe11-snapshot` - Development version of this image with Adobe 11 warmed up
