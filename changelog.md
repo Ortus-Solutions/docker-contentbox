@@ -5,7 +5,8 @@
 * Disabled directory browsing
 * Added docker hostname to Application name in Application.cfc
 * Added a rolling file appender for all app logs to go to > `/var/log/contentbox.log`
-
+* Upgrade to latest CommandBox v4.5.0
+* Updated healthchecks to permit load up times
 
 ## v3.1.3
 

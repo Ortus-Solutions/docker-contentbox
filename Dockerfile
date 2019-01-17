@@ -1,4 +1,4 @@
-FROM ortussolutions/commandbox:4.2.0
+FROM ortussolutions/commandbox:4.5.0
 
 # Labels
 LABEL version="@version@"
@@ -33,7 +33,7 @@ RUN ${BUILD_DIR}/contentbox-cleanup.sh
 ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/index.cfm"
 
 # Our healthcheck interval doesn't allow dynamic intervals - Default is 20s intervals with 15 retries
-HEALTHCHECK --interval=20s --timeout=30s --retries=15 CMD curl --fail ${HEALTHCHECK_URI} || exit 1
+HEALTHCHECK --interval=30s --timeout=45s --retries=15 CMD curl --fail ${HEALTHCHECK_URI} || exit 1
 
 # Apt Cleanup
 #RUN ${BUILD_DIR}/apt-cleanup.sh
