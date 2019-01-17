@@ -23,9 +23,9 @@ The following tags are based off our image's `master` branch and are production-
   
 ### Development Tags
 
-The following tags are based off our `development` branch. These are bleeding edge container images that we use for testing until they are promoted to production tags.
+The following tags are based off our image's `development` branch. These are bleeding edge container images that we use for testing until they are promoted to production tags.
 
-* `:snapshot` - Development version of this image (Not of ContentBox, for ContentBox BE use the environment variable `BE`.)
+* `:snapshot` - Development version of this image
 * `:alpine-snapshot` - Development version of this image based on Alpine Linux
 * `:lucee5-snapshot` - Development version of this image with Lucee 5 warmed up
 * `:adobe2018-snapshot` - Development version of this image with Adobe 2018 warmed up
@@ -57,7 +57,7 @@ docker run -p 8080:8080 \
 	ortussolutions/contentbox
 ```
 
-> **Tip**: The `INSTALL` flag tells the image to take you through the ContentBox installer to pre-seed a database. You can remove this flag once your database is seeded.
+> **Tip**: The `INSTALL` flag tells the image to take you through the ContentBox installer to pre-seed a database. You can remove this flag once your database is seeded and persisted via a volume.
 
 A new container will be spun up from the image and, upon opening your browser to `http://[docker machine ip]:8080`, you will be directed to configure your [ContentBox](https://www.ortussolutions.com/products/contentbox) installation wizard.
 
@@ -155,7 +155,7 @@ As you can see, these commands can become quite long. As such, using [Docker Com
 A number of environment variables, specific to the ContentBox image, are availabe for use. They include:
 
 * `EXPRESS=true` - Uses an H2, in-memory database. Useful for very small sites or for testing the image. See [http://www.h2database.com/html/main.html](http://www.h2database.com/html/main.html)
-* `INSTALL=true` \(alias: `INSTALLER`\) - Adds the installer module at runtime, to assist in configuring your installation. You would omit this from your `run` command, once your database has been configured
+* `INSTALL=true` - Adds the installer module at runtime, to assist in configuring your installation. You would omit this from your `run` command, once your database has been configured
 * `BE=true` - Uses the **bleeding edge** snapshot of the ContentBox CMS, else we will defer to the **latest stable** version of ContentBox.
 * `HEALTHCHECK_URI` - Specifies the URI endpoint for container health checks.  By default, this is set `http://127.0.0.1:${PORT}/` at 1 minute intervals with 5 retries and a timeout of 30s
 * `FWREINIT_PW` - Allows you to specify the reinit password for the ColdBox framework
@@ -184,7 +184,7 @@ We have also prepared a docker compose and distribution example using Redis \(mo
 
 ## Healthchecks
 
-The image contains built-in capabilities for healthchecks for the running application. You can customize the URL entry point by using the `HEALTHCHECK_URI` environment variable. By default, this is set `http://127.0.0.1:${PORT}/` at 1 minute intervals with 5 retries and a timeout of 30s.
+The image contains built-in capabilities for healthchecks for the running application. You can customize the URL entry point by using the `HEALTHCHECK_URI` environment variable. By default, this is set `http://127.0.0.1:${PORT}/` at 30s intervals with 15 retries and a timeout of 45s.
 
 ## Issues
 

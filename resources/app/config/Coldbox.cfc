@@ -73,7 +73,8 @@ component{
 					class 		= "coldbox.system.logging.appenders.RollingFileAppender",
 					properties 	= {
 						filename 	= "contentbox",
-						filePath	= expandPath( "/var/log/" )
+						filePath	= "/var/log/",
+						autoExpand 	= false
 					}
 				}
 			},

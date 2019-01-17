@@ -8,13 +8,9 @@ TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 echo ">INFO: Creating Image Version File - ${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
 echo "${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
 
-if [[ $BE ]] && [[ $BE = true ]]; then
-	echo ">INFO: Bleeding Edge installation specified."
-	box install contentbox-installer@be --production
-else 
-	echo ">INFO: Latest Stable Release installation specified."
-	box install contentbox-installer --production
-fi;
+# Install ContentBox
+echo ">INFO: Latest Stable Release installation specified."
+box install contentbox-installer --production
 
 # Remove DSN creator no need to use it
 rm -Rf ${APP_DIR}/modules/contentbox-dsncreator

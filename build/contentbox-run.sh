@@ -4,6 +4,14 @@ set -e
 cd ${APP_DIR}
 
 #######################################################################################
+# ContentBox BE Edition
+#######################################################################################
+if [[ $BE ]] && [[ $BE = true ]]; then
+	echo ">INFO: Bleeding Edge installation specified. Overwriting install"
+	box install contentbox-installer@be --production --force
+fi;
+
+#######################################################################################
 # Express Edition
 #######################################################################################
 if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then

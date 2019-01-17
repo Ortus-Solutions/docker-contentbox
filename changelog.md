@@ -2,13 +2,14 @@
 
 ## v4.0.0
 
-* Disabled directory browsing
-* Added docker hostname to Application name in Application.cfc
+* Disabled directory browsing for security
+* Added docker hostname to Application name in `Application.cfc`
 * Added a rolling file appender for all app logs to go to > `/var/log/contentbox.log`
 * Upgrade to latest CommandBox v4.5.0
 * Updated healthchecks to permit load up times
 * No flags where ever being used, revamped it to warmup the server correctly and leverage environment variables for execution
 * Removed support for lucee 4.5
+* `BE` env variable was never working
 
 ## v3.1.3
 
