@@ -34,4 +34,4 @@ RUN ${BUILD_DIR}/contentbox-cleanup.sh
 ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/index.cfm"
 
 # Our healthcheck interval doesn't allow dynamic intervals - Default is 20s intervals with 15 retries
-HEALTHCHECK --interval=30s --timeout=60s --retries=5 CMD curl --fail ${HEALTHCHECK_URI} || exit 1
+HEALTHCHECK --interval=30s --timeout=30s --retries=2 --start-period=60s CMD curl --fail ${HEALTHCHECK_URI} || exit 1

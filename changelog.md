@@ -1,5 +1,9 @@
 # Changelog
 
+## v4.1.0
+
+* Updated healthchecks to include `start-periods` and also better timeouts and intervals
+
 ## v4.0.0
 
 * Disabled directory browsing for security
