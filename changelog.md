@@ -2,6 +2,9 @@
 
 ## v4.1.0
 
+### Improvements
+
+* Add `-x` to scripts to allow you to see the command that runs for info purposes
 * Updated healthchecks to include `start-periods` and also better timeouts and intervals
 
 ## v4.0.0
