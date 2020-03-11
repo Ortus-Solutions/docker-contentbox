@@ -9,6 +9,7 @@
 
 ### Improvements
 
+* We now include tags for not only the ContentBox version but also the image version: `:${CONTENTBOX_VERSION}_${IMAGE_VERSION}`
 * Add `-x` to scripts to allow you to see the command that runs for info purposes
 * Updated healthchecks to include `start-periods` and also better timeouts and intervals
 

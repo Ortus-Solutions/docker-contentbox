@@ -28,10 +28,10 @@ if [[ $TRAVIS_BRANCH == 'master' ]]; then
         # Tag with `latest` as well and push it
         docker tag ${TRAVIS_COMMIT}:${TRAVIS_JOB_ID} ${BUILD_IMAGE_TAG}:latest
         docker push ${BUILD_IMAGE_TAG}:latest
-        BUILD_IMAGE_TAG="${BUILD_IMAGE_TAG}:${CONTENTBOX_VERSION}"
+        BUILD_IMAGE_TAG="${BUILD_IMAGE_TAG}:${CONTENTBOX_VERSION}_${IMAGE_VERSION}"
     else
-        # Tag with -version
-        BUILD_IMAGE_TAG="${BUILD_IMAGE_TAG}-${CONTENTBOX_VERSION}"
+        # Tag with -contentboxVersion_imageVersion
+        BUILD_IMAGE_TAG="${BUILD_IMAGE_TAG}-${CONTENTBOX_VERSION}_${IMAGE_VERSION}"
     fi
 
 elif [[ $TRAVIS_BRANCH == 'development' ]]; then
