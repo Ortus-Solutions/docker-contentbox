@@ -1,6 +1,6 @@
 # Seed it on a specific CommandBox Image Version
 # https://hub.docker.com/r/ortussolutions/commandbox/tags
-FROM ortussolutions/commandbox:4.8.0
+FROM ortussolutions/commandbox:2.8.0
 
 # Labels
 LABEL version="@version@"
