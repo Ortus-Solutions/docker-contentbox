@@ -12,14 +12,20 @@ We have our tags divided by either production or bleeding edge container images.
 
 ### Production Tags
 
-The following tags are based off our image's `master` branch and are production-ready images.  The version number matches the release of ContentBox
+The following tags are based off our image's `master` branch and are production-ready images.  The first version number matches the release of ContentBox and the second version number is our image release version.
 
-* `:latest`, `:4.2.1` - Latest stable version of ContentBox `4.2.1`
-* `:alpine-{version}` - Latest stable version based off Alpine Linux
-* `:lucee5-{version}` - Latest stable version of this image with Lucee 5 warmed up
-* `:adobe2018-{version}` - Latest stable version of this image with Adobe 2018 warmed up
-* `:adobe2016-{version}` - Latest stable version of this image with Adobe 2016 warmed up
-* `:adobe11-{version}` - Latest stable version of this image with Adobe 11 warmed up
+```
+{contentboxVersion}_{imageVersion}
+```
+
+We attach the two versions because we could have the same ContentBox version but an updated image version.
+
+* `:latest` - The latest stable version of both ContentBox and our image
+* `:{contentboxVersion:4.2.1}_{imageVersion:5.0.0}` - Specific ContentBox and Image Version
+* `:alpine-{contentboxVersion}_{imageVersion}` - Latest stable version based off Alpine Linux
+* `:lucee5-{contentboxVersion}_{imageVersion}` - Latest stable version of this image with Lucee 5 warmed up
+* `:adobe2018-{contentboxVersion}_{imageVersion}` - Latest stable version of this image with Adobe 2018 warmed up
+* `:adobe2016-{contentboxVersion}_{imageVersion}` - Latest stable version of this image with Adobe 2016 warmed up
   
 ### Development Tags
 
@@ -30,7 +36,6 @@ The following tags are based off our image's `development` branch. These are ble
 * `:lucee5-snapshot` - Development version of this image with Lucee 5 warmed up
 * `:adobe2018-snapshot` - Development version of this image with Adobe 2018 warmed up
 * `:adobe2016-snapshot` - Development version of this image with Adobe 2016 warmed up
-* `:adobe11-snapshot` - Development version of this image with Adobe 11 warmed up
 
 > **Tip:** Look in the tags section for other specific ContentBox versions
 
