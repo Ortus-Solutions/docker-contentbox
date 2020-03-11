@@ -2,7 +2,7 @@ language: python
 
 env:
   global:
-    - IMAGE_VERSION=5.0.0
+    - IMAGE_VERSION=5.1.0
     - CONTENTBOX_VERSION=4.2.1
   matrix:
     # Ubuntu Base
