@@ -4,8 +4,8 @@
 
 ### New Features
 
-* Upgraded to latest CommandBox Image: v4.8.0
-* Refactored entire image creation which now gives us a whoopoing 600-700mb in size savings from the previous version
+* Upgraded to latest CommandBox Image: v2.8.0, so we get all of that image goodness
+* Refactored entire image creation which now gives us a whoopoing 400-600mb in size savings from the previous version
 
 ### Improvements
 
@@ -16,6 +16,22 @@
 ### Compatibility
 
 * Dropped ACF11 Images
+
+### v4 Image Sizes
+
+* `latest` : 901.43mb
+* `alpine` : 920.88mb
+* `lucee5-4.2.1` : 996.21mb
+* `adobe2016-4.2.1` : 996.21mb
+* `adobe2018-4.2.1` : 996.21mb
+
+### v5 Images using CommandBox v4.8.0
+
+* `latest` : 492.73mb (408.7mb in savings)
+* `alpine` : 486.59mb (434.29mb in savings)
+* `lucee5-4.2.1` : 813.20mb (183.01mb in savings)
+* `adobe2016-4.2.1` : 824.54mb (171.67mb in savings)
+* `adobe2018-4.2.1` : 836.64mb (159.57mb in savings)
 
 ---
 
