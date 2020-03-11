@@ -5,20 +5,23 @@ env:
     - IMAGE_VERSION=5.0.0
     - CONTENTBOX_VERSION=4.2.1
   matrix:
-    # Ubuntu Based
+    # Ubuntu Base
     - BUILD_IMAGE_DOCKERFILE=Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox
-    # Alpine Based
-    - BUILD_IMAGE_DOCKERFILE=engines/Alpine.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:alpine
+    # Alpine Base
+    - BUILD_IMAGE_DOCKERFILE=variants/Alpine.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:alpine
     # Specific Servers Ubuntu Based
-    - BUILD_IMAGE_DOCKERFILE=engines/Lucee5.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
-    - BUILD_IMAGE_DOCKERFILE=engines/Adobe2016.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016
-    - BUILD_IMAGE_DOCKERFILE=engines/Adobe2018.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2018
+    - BUILD_IMAGE_DOCKERFILE=variants/Lucee5.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
+    - BUILD_IMAGE_DOCKERFILE=variants/Adobe2016.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016
+    - BUILD_IMAGE_DOCKERFILE=variants/Adobe2018.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2018
 
 services:
   - docker
 
 script:
-  - echo "Preparing to deploy!"
+  # Add image version into the base
+  - find ./Dockerfile -type f -exec sed -i '' -e "s/@version@/${IMAGE_VERSION}/g" {} \;
+  # Build out the base for the variants to work off
+  - docker build --no-cache --build-arg CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER -t contentbox-base -f ./Dockerfile $TRAVIS_BUILD_DIR/
 
 deploy:
   skip_cleanup: true
@@ -27,4 +30,4 @@ deploy:
       - master
       - development
   provider: script
-  script: ./resources/build.sh
+  script: ./resources/publish.sh
