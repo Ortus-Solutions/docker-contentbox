@@ -1,18 +1,19 @@
 /**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* Application Bootstrap
-*/
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * Application Bootstrap
+ */
 component{
-	// Application properties, modify as you see fit
-	this.name = "ContentBox-Docker-" & ( server.environment.hostname ?: "" );
-	
 	// Add Environment Access
 	system = createObject( "java", "java.lang.System" );
 	systemEnv = system.getenv();
 
+	// Application properties, modify as you see fit
+	this.name = "ContentBox-Docker-" & ( systemEnv.hostname ?: "" );
+
+	// Session Management
 	this.sessionManagement 	= true;
 	this.sessionTimeout 	= createTimeSpan( 0, 1, 0, 0 );
 	// We can set our application timeout to a year, since restarting the Docker service will restart the server

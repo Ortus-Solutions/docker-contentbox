@@ -1,10 +1,12 @@
 #!/bin/bash
 set -e
 
+# Move into CommandBox image work dir
 cd ${APP_DIR}
 
 #######################################################################################
 # ContentBox BE Edition
+# This has to be here, since our original image is baked with the latest stable
 #######################################################################################
 if [[ $BE ]] && [[ $BE = true ]]; then
 	echo ">INFO: Bleeding Edge installation specified. Overwriting install"
@@ -71,5 +73,5 @@ mkdir -p $contentbox_default_cb_media_directoryRoot
 echo ">INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
 echo "==> ContentBox Environment Finalized"
 
-# Run CommandBox Now
+# Run CommandBox Server Now
 ${BUILD_DIR}/run.sh

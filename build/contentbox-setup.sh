@@ -1,19 +1,22 @@
 #!/bin/bash
-set -e
+set -ex
 
+# Move to CommandBox app Directory
 cd ${APP_DIR}
 
-# Create Image Version File
+# Create Image Version File for debugging purposes
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 echo ">INFO: Creating Image Version File - ${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
 echo "${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
 
-# Install ContentBox
+# Install ContentBox Latest Stable
 echo ">INFO: Latest Stable Release installation specified."
 box install contentbox-installer --production
 
 # Remove DSN creator no need to use it
 rm -Rf ${APP_DIR}/modules/contentbox-dsncreator
+# Remove unecessary apidocs
+rm -Rfv ${APP_DIR}/**/apidocs/**
 
 # Ensure the modules_app directory exists or ACF will blow up
 mkdir -p ${APP_DIR}/modules_app
@@ -42,6 +45,8 @@ echo "==> ContentBox and dependencies installed"
 #######################################################################################
 # WARM UP THE ENGINE
 #######################################################################################
-${BUILD_DIR}/util/warmup-server.sh
+#${BUILD_DIR}/util/warmup-server.sh
+#echo "==> Engine Warmup Complete!"
 
-echo "==> Engine Warmup Complete!"
+# Run Cleanups
+$BUILD_DIR/contentbox/contentbox-cleanup.sh

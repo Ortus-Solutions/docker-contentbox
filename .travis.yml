@@ -2,24 +2,26 @@ language: python
 
 env:
   global:
-    - IMAGE_VERSION=4.0.0
+    - IMAGE_VERSION=5.0.0
     - CONTENTBOX_VERSION=4.2.1
   matrix:
-    # Ubuntu Based
+    # Ubuntu Base
     - BUILD_IMAGE_DOCKERFILE=Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox
-    # Alpine Based
-    - BUILD_IMAGE_DOCKERFILE=Dockerfile.alpine BUILD_IMAGE_TAG=ortussolutions/contentbox:alpine
-    # Specific Servers
-    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Lucee5 BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
-    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe11 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe11
-    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe2016 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016
-    - BUILD_IMAGE_DOCKERFILE=engines/Dockerfile.Adobe2018 BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2018
+    # Alpine Base
+    - BUILD_IMAGE_DOCKERFILE=variants/Alpine.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:alpine
+    # Specific Servers Ubuntu Based
+    - BUILD_IMAGE_DOCKERFILE=variants/Lucee5.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:lucee5
+    - BUILD_IMAGE_DOCKERFILE=variants/Adobe2016.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2016
+    - BUILD_IMAGE_DOCKERFILE=variants/Adobe2018.Dockerfile BUILD_IMAGE_TAG=ortussolutions/contentbox:adobe2018
 
 services:
   - docker
 
 script:
-  - echo "Preparing to deploy!"
+  # Add image version into the base
+  - sed -i -e "s/@version@/$IMAGE_VERSION/g" $TRAVIS_BUILD_DIR/Dockerfile
+  # Build out the base for the variants to work off
+  - docker build --no-cache --build-arg CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER -t contentbox-base -f ./Dockerfile $TRAVIS_BUILD_DIR/
 
 deploy:
   skip_cleanup: true
@@ -28,4 +30,4 @@ deploy:
       - master
       - development
   provider: script
-  script: ./resources/build.sh
+  script: ./resources/publish.sh
