@@ -19,7 +19,7 @@ services:
 
 script:
   # Add image version into the base
-  - find ./Dockerfile -type f -exec sed -i '' -e "s/@version@/${IMAGE_VERSION}/g" {} \;
+  - sed -i -e "s/@version@/$IMAGE_VERSION/g" $TRAVIS_BUILD_DIR/Dockerfile
   # Build out the base for the variants to work off
   - docker build --no-cache --build-arg CI_BUILD_NUMBER=$TRAVIS_BUILD_NUMBER -t contentbox-base -f ./Dockerfile $TRAVIS_BUILD_DIR/
 
