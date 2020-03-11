@@ -1,11 +1,22 @@
 # Changelog
 
-## v4.1.0
+## v5.0.0
+
+### New Features
+
+* Upgraded to latest CommandBox Image: v4.8.0
+* Refactored entire image creation which now gives us a whoopoing 600-700mb in size savings from the previous version
 
 ### Improvements
 
 * Add `-x` to scripts to allow you to see the command that runs for info purposes
 * Updated healthchecks to include `start-periods` and also better timeouts and intervals
+
+### Compatibility
+
+* Dropped ACF11 Images
+
+---
 
 ## v4.0.0
 
