@@ -1,5 +1,5 @@
 #!/bin/bash
-set -ex
+set -e
 
 # Move into CommandBox image work dir
 cd ${APP_DIR}
