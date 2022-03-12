@@ -132,7 +132,7 @@ component {
 		};
 
 		// Choose a distributed cache
-		var distributedCache = getSystemSetting( "DISTRIBUTED_CACHE", "jdbc" );
+		var distributedCache = getSystemSetting( "DISTRIBUTED_CACHE", getSystemSetting( "EXPRESS", false ) ? "express" : "jdbc" );
 
 		/**
 		 * --------------------------------------------------------------------------
@@ -162,18 +162,18 @@ component {
 					// Global settings
 					"global" : {
 					  // Distributed Cache For ContentBox
-					  "cb_content_cacheName"   = distributedCache,
-					  "cb_rss_cacheName"       = distributedCache,
+					  "cb_content_cacheName"   = distributedCache == "express" ? "template" : distributedCache,
+					  "cb_rss_cacheName"       = distributedCache == "express" ? "template" : distributedCache,
 					  "cb_site_settings_cache" = distributedCache
 					},
 					// Site specific settings according to site slug
 					"sites" : {
 						// Default site
 						"default" = {
-							// Distributed Cache For ContentBox
-						  "cb_content_cacheName"   = distributedCache,
-						  "cb_rss_cacheName"       = distributedCache,
-						  "cb_site_settings_cache" = distributedCache
+						// Distributed Cache For ContentBox
+						"cb_content_cacheName"   = distributedCache == "express" ? "template" : distributedCache,
+						"cb_rss_cacheName"       = distributedCache == "express" ? "template" : distributedCache,
+						"cb_site_settings_cache" = distributedCache
 						}
 					}
 				}

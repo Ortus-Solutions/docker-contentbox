@@ -32,7 +32,6 @@ component{
 				objectStore = "ConcurrentStore", //guaranteed objects
 				coldboxEnabled = true
 			},
-			
 			// Register all the custom named caches you like here
 			caches = {
 				// Named cache for all coldbox event and view template caching
@@ -67,7 +66,18 @@ component{
 						table = "cachebox_sessions"
 					}
 				},
-
+				express = {
+					objectDefaultTimeout = 120, //two hours default
+					objectDefaultLastAccessTimeout = 30, //30 minutes idle time
+					useLastAccessTimeouts = true,
+					reapFrequency = 2,
+					freeMemoryPercentageThreshold = 0,
+					evictionPolicy = "LRU",
+					evictCount = 5,
+					maxObjects = 5000,
+					objectStore = "ConcurrentStore", //guaranteed objects
+					coldboxEnabled = true
+				},
 				// JDBC Stored Cache, can be used if requested to distribute content
 				jdbc = {
 					provider 	= "coldbox.system.cache.providers.CacheBoxProvider",
