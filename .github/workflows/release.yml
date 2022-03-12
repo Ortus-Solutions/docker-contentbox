@@ -94,7 +94,7 @@ jobs:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ${{ matrix.BUILD_IMAGE_DOCKERFILE }}
-          build-args: COMMANDBOX_VERSION=${{ steps.setup.outputs.commandbox_version }}
+          build-args: IMAGE_VERSION=${{ steps.setup.outputs.image_version }},TAGS=${{ steps.setup.outputs.tags }}
           platforms: ${{ steps.setup.outputs.arch_platforms }}
           push: true
           tags: ${{ steps.setup.outputs.tags }}    

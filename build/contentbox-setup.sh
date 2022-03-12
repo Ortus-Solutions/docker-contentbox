@@ -6,8 +6,8 @@ cd ${APP_DIR}
 
 # Create Image Version File for debugging purposes
 TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
-echo ">INFO: Creating Image Version File - ${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
-echo "${CI_BUILD_NUMBER} - ${CI_BUILD_URL} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
+echo ">INFO: Creating Image Version File - ${TAGS} - ${IMAGE_VERSION} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
+echo "${TAGS} - ${IMAGE_VERSION} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
 
 # Install ContentBox Latest Stable
 echo ">INFO: Latest Stable Release installation specified."

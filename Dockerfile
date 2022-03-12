@@ -9,8 +9,8 @@ LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
 LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 
 # Incoming Secrets/Vars From Build Process
-ARG CI_BUILD_NUMBER=1
-ARG CI_BUILD_URL=testmode
+ARG IMAGE_VERSION=5.5.0
+ARG TAGS=ortussolutions/contentbox:test
 
 # Copy over our app resources which brings lots of goodness like session distribution,
 # db env vars, caching, etc.
