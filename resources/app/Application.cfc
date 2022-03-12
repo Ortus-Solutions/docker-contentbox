@@ -5,93 +5,137 @@
  * ---
  * Application Bootstrap
  */
-component{
-	// Add Environment Access
-	system = createObject( "java", "java.lang.System" );
-	systemEnv = system.getenv();
+component {
+	/**
+	 * --------------------------------------------------------------------------
+	 * NON COMMANDBOX INSTALLS
+	 * --------------------------------------------------------------------------
+	 * If you are NOT using CommandBox as your server, then set the variable to true
+	 * and ContentBox will load the `.env` environment file that is needed for operation.
+	 * Without this, your NON CommandBox ContentBox install will fail.
+	 */
+	this._loadDynamicEnvironment = false;
 
+	request.$coldboxUtil = new coldbox.system.core.util.Util();
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * Application Properties: Modify as you see fit!
+	 * --------------------------------------------------------------------------
+	 */
 	// Application properties, modify as you see fit
-	this.name = "ContentBox-Docker-" & ( systemEnv.hostname ?: "" );
+	this.name = "ContentBox-Docker-" & request.$coldboxUtil.getSystemSetting( "hostname", "" );
+	this.sessionManagement = true;
+	this.sessionTimeout    = createTimespan( 0, 1, 0, 0 );
+	this.setClientCookies  = true;
+	this.setDomainCookies  = true;
+	this.scriptProtect     = false;
+	this.secureJSON        = false;
+	this.timezone 			= "UTC";
 
-	// Session Management
-	this.sessionManagement 	= true;
-	this.sessionTimeout 	= createTimeSpan( 0, 1, 0, 0 );
-	// We can set our application timeout to a year, since restarting the Docker service will restart the server
-	this.applicationTimeout = createTimeSpan( 365, 0, 0, 0 );
-	// Get our storage from the system env
-	this.sessionStorage 	= structKeyExists( systemEnv, "SESSION_STORAGE" ) ? systemEnv[ "SESSION_STORAGE" ] : "contentbox";
-	this.sessionCluster 	= true;
-	this.setClientCookies 	= true;
-	this.setDomainCookies 	= true;
-	this.scriptProtect		= false;
-	this.secureJSON 		= false;
-	
-	/**************************************
-	LUCEE Specific Settings
-	**************************************/
-	// buffer the output of a tag/function body to output in case of a exception
-	this.bufferOutput 					= true;
+	/**
+	 * --------------------------------------------------------------------------
+	 * Lucee Specific Settings
+	 * --------------------------------------------------------------------------
+	 */
+
+	 // buffer the output of a tag/function body to output in case of a exception
+	this.bufferOutput                   = true;
 	// Activate Gzip Compression
-	this.compression 					= false;
-	// Turn on/off white space managemetn
-	this.whiteSpaceManagement 			= "smart";
+	this.compression                    = false;
+	// Turn on/off white space management
+	this.whiteSpaceManagement           = "smart";
 	// Turn on/off remote cfc content whitespace
 	this.suppressRemoteComponentContent = false;
 
-	// ColdBox Application Specific, Modify if you need to
+	/**
+	 * --------------------------------------------------------------------------
+	 * ColdBox Bootstrap Settings
+	 * --------------------------------------------------------------------------
+	 * Modify only if you need to, else default them.
+	 */
 	COLDBOX_APP_ROOT_PATH 	= getDirectoryFromPath( getCurrentTemplatePath() );
-	COLDBOX_APP_MAPPING		= "";
-	COLDBOX_CONFIG_FILE 	= "";
-	COLDBOX_APP_KEY 		= "";
-
-	// LOCATION MAPPINGS
-	this.mappings[ "/cbapp" ] 				= COLDBOX_APP_ROOT_PATH;
-	this.mappings[ "/coldbox" ] 			= COLDBOX_APP_ROOT_PATH & "coldbox";
-	this.mappings[ "/contentbox" ] 			= COLDBOX_APP_ROOT_PATH & "modules/contentbox";
-	this.mappings[ "/contentbox-deps" ] 	= COLDBOX_APP_ROOT_PATH & "modules/contentbox/modules/contentbox-deps";
-	this.mappings[ "/cborm" ] 	 			= this.mappings[ "/contentbox-deps" ] & "/modules/cborm";
+	COLDBOX_APP_MAPPING   	= "";
+	COLDBOX_CONFIG_FILE   	= "";
+	COLDBOX_APP_KEY       	= "";
+	COLDBOX_FAIL_FAST 		= true;
 
 	/**
-	* Custom Datasource Dynamic configs for docker
-	* Moved here, before ORM definitions exist.
+	 * --------------------------------------------------------------------------
+	 * Location Mappings
+	 * --------------------------------------------------------------------------
+	 * - cbApp : Quick reference to root application
+	 * - coldbox : Where ColdBox library is installed
+	 * - contentbox : Where the ContentBox module root is installed
+	 * - cborm : Where the cborm library is installed: Needed for ORM Event Handling.
+	 */
+	this.mappings[ "/cbapp" ]      = COLDBOX_APP_ROOT_PATH;
+	this.mappings[ "/coldbox" ]    = COLDBOX_APP_ROOT_PATH & "coldbox";
+	this.mappings[ "/contentbox" ] = COLDBOX_APP_ROOT_PATH & "modules/contentbox";
+	this.mappings[ "/cborm" ]      = this.mappings[ "/contentbox" ] & "/modules/contentbox-deps/modules/cborm";
+
+	/**
+	 * --------------------------------------------------------------------------
+	 * ORM + Datasource Settings
+	 * --------------------------------------------------------------------------
+	 * - Please update the cfcLocation as needed to locate more ORM entities for your app
+	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
+	 * So Make sure you select one.
+	 */
+	
+	/**
+	* Custom Datasource Dynamic configs before ORM definitions exist.
 	**/
 	include "config/datasourceMixins.cfm";
 
-	// THE DATASOURCE FOR CONTENTBOX MANDATORY
-	this.datasource = "contentbox";
+	// THE CONTENTBOX DATASOURCE NAME
+	this.datasource  = request.$coldboxUtil.getSystemSetting( "DATASOURCE_NAME", "contentbox" );
 	// ORM SETTINGS
-	this.ormEnabled = true;
+	this.ormEnabled  = true;
+	// cfformat-ignore-start
 	this.ormSettings = {
 		// ENTITY LOCATIONS, ADD MORE LOCATIONS AS YOU SEE FIT
-		cfclocation=[ "models", "modules", "modules_app" ],
+		cfclocation           : [
+			// If you create your own app entities
+			"models",
+			// The ContentBox Core Entities
+			"modules/contentbox/models",
+			// Custom Module Entities
+			"modules_app"
+		],
+		// THE DIALECT OF YOUR DATABASE OR LET HIBERNATE FIGURE IT OUT, UP TO YOU TO CONFIGURE.
+		dialect 				: request.$coldboxUtil.getSystemSetting( "ORM_DIALECT", "" ),
 		// DO NOT REMOVE THE FOLLOWING LINE OR AUTO-UPDATES MIGHT FAIL.
-		dbcreate = "update",
-		// GET SECONDARY CACHE FROM ENV VARIABLE
-		secondarycacheenabled = structKeyExists( systemEnv, "ORM_SECONDARY_CACHE" ) ? systemEnv[ "ORM_SECONDARY_CACHE" ] : false,
-		cacheprovider		= "EhCache",
+		dbcreate              	: "update",
+		secondarycacheenabled 	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", false ),
+		cacheprovider         	: request.$coldboxUtil.getSystemSetting( "ORM_SECONDARY_CACHE", "ehCache" ),
+		logSQL                	: request.$coldboxUtil.getSystemSetting( "ORM_LOGSQL", false ),
+		sqlScript				: request.$coldboxUtil.getSystemSetting( "ORM_SQL_SCRIPT", "" ),
 		// ORM SESSION MANAGEMENT SETTINGS, DO NOT CHANGE
-		logSQL 				= false,
-		flushAtRequestEnd 	= false,
-		autoManageSession	= false,
-		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK
-		eventHandling 		= true,
-		eventHandler		= "cborm.models.EventHandler",
+		flushAtRequestEnd     	: false,
+		autoManageSession     	: false,
+		// ORM EVENTS MUST BE TURNED ON FOR CONTENTBOX TO WORK DO NOT CHANGE
+		eventHandling         	: true,
+		eventHandler          	: "cborm.models.EventHandler",
 		// THIS IS ADDED SO OTHER CFML ENGINES CAN WORK WITH CONTENTBOX
-		skipCFCWithError	= true
+		skipCFCWithError      	: true,
+		// TURN ON FOR Debugging if ORM mappings are not working.
+		savemapping 			: false
 	};
-
-	// Dialect Overrides via environment
-	if( structKeyExists( systemEnv, "ORM_DIALECT" ) ){
-		this.ormSettings[ "dialect" ] = systemEnv[ "ORM_DIALECT" ];
-	}
+	// cfformat-ignore-end
 
 	/************************************** METHODS *********************************************/
 
 	// application start
 	public boolean function onApplicationStart(){
-		//Set a high timeout for any orm updates
-		setting requestTimeout="300";
-		application.cbBootstrap = new coldbox.system.Bootstrap( COLDBOX_CONFIG_FILE, COLDBOX_APP_ROOT_PATH, COLDBOX_APP_KEY, COLDBOX_APP_MAPPING );
+		// Set a high timeout for any orm updates
+		setting requestTimeout ="300";
+		application.cbBootstrap= new coldbox.system.Bootstrap(
+			COLDBOX_CONFIG_FILE,
+			COLDBOX_APP_ROOT_PATH,
+			COLDBOX_APP_KEY,
+			COLDBOX_APP_MAPPING
+		);
 		application.cbBootstrap.loadColdbox();
 		return true;
 	}
@@ -99,24 +143,32 @@ component{
 	// request start
 	public boolean function onRequestStart( string targetPage ){
 		// In case bootstrap or controller are missing, perform a manual restart
-		if( 
-			!structKeyExists( application, "cbBootstrap" ) 
+		if (
+			!structKeyExists( application, "cbBootstrap" )
 			||
 			!structKeyExists( application, "cbController" )
-		){
+		) {
+			if( this._loadDynamicEnvironment ){
+				loadEnv( force : true );
+			}
 			reinitApplication();
 		}
-		
+
 		// Development Reinit + ORM Reloads
-		if( 
-			structKeyExists( application, "cbController")
-			&& 
-			application.cbController.getSetting( "environment" ) == "development" 
+		if (
+			structKeyExists( application, "cbController" )
+			&&
+			application.cbController.getSetting( "environment" ) == "development"
 			&&
 			application.cbBootstrap.isFWReinit()
-		){
-			if( structKeyExists( server, "lucee" ) ){ pagePoolClear(); }
-			ORMREload();
+		) {
+			if( this._loadDynamicEnvironment ){
+				loadEnv( force : true );
+			}
+			if ( structKeyExists( server, "lucee" ) ) {
+				pagePoolClear();
+			}
+			ormReload();
 		}
 
 		// Process ColdBox Request
@@ -126,72 +178,58 @@ component{
 	}
 
 	public void function onSessionStart(){
-		if( structKeyExists( application, "cbBootstrap") ){
+		if ( structKeyExists( application, "cbBootstrap" ) ) {
 			application.cbBootStrap.onSessionStart();
 		}
 	}
 
 	public void function onSessionEnd( struct sessionScope, struct appScope ){
-		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection=arguments );
+		arguments.appScope.cbBootStrap.onSessionEnd( argumentCollection = arguments );
 	}
 
-	public boolean function onMissingTemplate(template){
-		return application.cbBootstrap.onMissingTemplate( argumentCollection=arguments );
+	public boolean function onMissingTemplate( template ){
+		return application.cbBootstrap.onMissingTemplate( argumentCollection = arguments );
 	}
 
 	/**
-	* Application Reinitialization
-	**/
+	 * Application Reinitialization
+	 **/
 	private void function reinitApplication(){
-		//Run onAppStart
+		// Run onAppStart
 		onApplicationStart();
 	}
 
 	/**
-	 * Load the datasource by convention by looking at `config/runtime.properties.cfm` 
-	 * or if not, load by default name of `contentbox` which needs to be registered in the CFML engine
-	 * This is mostly used for baking docker images with seeded datasources.
+	 * This method is only called if you are in a NON CommandBox install.
 	 */
-	private void function loadDatasource(){
-		// Load our Runtime Properties, which will dynamically create our datasource from config/runtime.properties, 
-		// if it does not exist
-		var runtimeProperties = COLDBOX_APP_ROOT_PATH & 'config/runtime.properties.cfm';
-		if( fileExists( runtimeProperties ) ){
-			var props = createObject( "java", "java.util.Properties" ).init();
-			props.load( createObject( "java", "java.io.FileInputStream" ).init( runtimeProperties ) );
-
-			// Init the datasource with shared engine properties
-			var dsn = {
-				username 	= props.getProperty( "DB_USERNAME", "" ),
-				password 	= props.getProperty( "DB_PASSWORD", "" ),
-				storage 	= props.getProperty( "DB_STORAGE", "false" ),
-				clob 		= true,
-				blob 		= true
-			};
-
-			// Check for full JDBC Connection strings and classes
-			var connectionString = props.getProperty( "DB_CONNECTIONSTRING", "" );
-			// If no connection string, add required common host/database params
-			if( !len( connectionString ) ){
-				dsn.host     	= props.getProperty( "DB_HOST" );
-				dsn.port     	= props.getProperty( "DB_PORT" );
-				dsn.database 	= props.getProperty( "DB_DATABASE" );
-				// Lucee Driver Type
-				dsn.type 	 	= props.getProperty( "DB_TYPE", "" );
-				// ACF Driver Type
-				dsn.driver 		= props.getProperty( "DB_DRIVER", "" );
-			}
-			// Leverages Connection strings
-			else {
-				if( structKeyExists( server, "lucee" ) ){
-					dsn.connectionString = connectionString;
-					dsn.class 			 = props.getProperty( "DB_CLASS" );
-				} else {
-					dsn.url = connectionString;
-				}
-			}
-			// Set it
-			this.datasources[ "contentbox" ] = dsn;
-		}
+	private void function loadEnv( boolean force = false){
+		var javaSystem = createObject( "java", "java.lang.System" );
+		var value = javaSystem.getProperty( "contentbox_runtime_env" );
+		// If not loaded, lock and load.
+		if ( isNull( value ) || arguments.force ) {
+			lock
+				name="contentbox_runtime_env"
+				timeout="15"
+				throwOnTimeout="true"
+				type="exclusive"
+			{
+				// Double lock
+				if( isNull( javaSystem.getProperty( "contentbox_runtime_env" ) ) || arguments.force ){
+					// Load .env file
+					var props = createObject( "java", "java.util.Properties" ).init();
+					props.load(
+						createObject( "java", "java.io.FileInputStream" ).init( expandPath( "/.env" ) )
+					);
+					// Iterate and add
+					var availableProps = props.propertyNames();
+					while( availableProps.hasNext() ){
+						var propName = availableProps.next();
+						javaSystem.setProperty( propName,  props.getProperty( propName ) );
+					}
+					javaSystem.setProperty( "contentbox_runtime_env", true );
+				} // end double lock
+			} // end lock
+		} // end lock check
 	}
+
 }

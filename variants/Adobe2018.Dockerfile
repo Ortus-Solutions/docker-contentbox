@@ -1,4 +1,5 @@
-FROM contentbox-base
+# syntax = edrevo/dockerfile-plus
+INCLUDE+ Dockerfile
 
 LABEL version="@version@"
 LABEL maintainer "Jon Clausen <jclausen@ortussolutions.com>"

@@ -1,4 +1,4 @@
-FROM ortussolutions/commandbox:alpine-2.8.0
+FROM ortussolutions/commandbox:alpine
 
 # Labels
 LABEL version="@version@"

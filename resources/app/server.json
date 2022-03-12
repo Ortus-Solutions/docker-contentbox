@@ -1,6 +1,7 @@
 {
+    "name" : "ContentBox",
     "jvm":{
-        "heapSize": "${JVM_HEAPSIZE:512}",
+        "heapSize": "${JVM_HEAPSIZE:768}",
         "args": "-Dlucee-extensions=465E1E35-2425-4F4E-8B3FAB638BD7280A"
     },
     "web":{
@@ -10,11 +11,11 @@
         },
         "http":{
             "enable":true,
-            "port":"8080"
+            "port":"${PORT:8080}"
         },
         "ssl":{
             "enable":true,
-            "port":"8443"
+            "port":"${SSL_PORT:8443}"
         },
         "host":"0.0.0.0"
     },
