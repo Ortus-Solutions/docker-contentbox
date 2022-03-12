@@ -131,6 +131,9 @@ component {
 			autoSave     : true // automatically save flash scopes at end of a request and on relocations.
 		};
 
+		// Choose a distributed cache
+		var distributedCache = getSystemSetting( "DISTRIBUTED_CACHE", "jdbc" );
+
 		/**
 		 * --------------------------------------------------------------------------
 		 * Module Settings
@@ -158,10 +161,20 @@ component {
 				"settings" : {
 					// Global settings
 					"global" : {
+					  // Distributed Cache For ContentBox
+					  "cb_content_cacheName"   = distributedCache,
+					  "cb_rss_cacheName"       = distributedCache,
+					  "cb_site_settings_cache" = distributedCache
 					},
 					// Site specific settings according to site slug
 					"sites" : {
-						// siteSlug : { ... }
+						// Default site
+						"default" = {
+							// Distributed Cache For ContentBox
+						  "cb_content_cacheName"   = distributedCache,
+						  "cb_rss_cacheName"       = distributedCache,
+						  "cb_site_settings_cache" = distributedCache
+						}
 					}
 				}
 			},
@@ -427,9 +440,8 @@ component {
 			}
 		};
 
-
 		// Distributed Cache Flash, only in non installer mode
-		if( !structKeyExists( systemEnv, "installer" ) && !structKeyExists( systemEnv, "install" ) ){
+		if( !getSystemSetting( "installer", false ) && !getSystemSetting( "install", false ) ){
 			flash = {
 			    scope = "cache",
 			    properties = {
@@ -443,7 +455,7 @@ component {
 		}
 
 		// Mail settings for writing to log files instead of sending mail on dev.
-		if( structKeyExists( systemEnv, "ORTUS_DEV" ) ){
+		if( getSystemSetting( "ORTUS_DEV", false ) ){
 			mailSettings = {
 				from 		= "info@ortussolutions.com",
 				to 			= "info@ortussolutions.com",

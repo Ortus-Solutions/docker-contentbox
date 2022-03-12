@@ -5,7 +5,7 @@
 	// Express H2SQL Database
 	if( isExpress ){
 
-		dbDirectory = systemEnv[ "H2_DIR" ] ?: '/data/contentbox/db';
+		dbDirectory = request.$coldboxUtil.getSystemSetting( "H2_DIR", '/data/contentbox/db' );
 		
 		datasourceConfig = {
 			class 			 	: 'org.h2.Driver',
