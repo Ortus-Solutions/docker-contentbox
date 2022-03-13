@@ -70,7 +70,7 @@ component{
 		};
 
 		if( request.$coldboxUtil.getSystemSetting( "EXPRESS", false ) ){
-			cacheBox[ "express" ] = {
+			cacheBox.caches[ "express" ] = {
 				objectDefaultTimeout = 120, //two hours default
 				objectDefaultLastAccessTimeout = 30, //30 minutes idle time
 				useLastAccessTimeouts = true,
@@ -83,7 +83,7 @@ component{
 				coldboxEnabled = true
 			};
 		} else {
-			cacheBox[ "jdbc" ] = {
+			cacheBox.caches[ "jdbc" ] = {
 				provider 	= "coldbox.system.cache.providers.CacheBoxProvider",
 				properties 	= {
 					objectDefaultTimeout = 120,
