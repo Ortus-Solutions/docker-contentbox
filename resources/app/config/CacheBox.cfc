@@ -65,37 +65,40 @@ component{
 						dsn   = "contentbox",
 						table = "cachebox_sessions"
 					}
-				},
-				express = {
-					objectDefaultTimeout = 120, //two hours default
-					objectDefaultLastAccessTimeout = 30, //30 minutes idle time
-					useLastAccessTimeouts = true,
-					reapFrequency = 2,
-					freeMemoryPercentageThreshold = 0,
-					evictionPolicy = "LRU",
-					evictCount = 5,
-					maxObjects = 5000,
-					objectStore = "ConcurrentStore", //guaranteed objects
-					coldboxEnabled = true
-				},
-				// JDBC Stored Cache, can be used if requested to distribute content
-				jdbc = {
-					provider 	= "coldbox.system.cache.providers.CacheBoxProvider",
-					properties 	= {
-						objectDefaultTimeout = 120,
-						objectDefaultLastAccessTimeout = 30,
-						useLastAccessTimeouts = true,
-						reapFrequency = 2,
-						evictionPolicy = "LRU",
-						evictCount = 5,
-						maxObjects = 1000,
-						objectStore = "JDBCStore",
-						dsn   = "contentbox",
-						table = "cachebox_content"
-					}
 				}
 			}		
 		};
+
+		if( getSystemSetting( "EXPRESS", false ) ){
+			cacheBox[ "express" ] = {
+				objectDefaultTimeout = 120, //two hours default
+				objectDefaultLastAccessTimeout = 30, //30 minutes idle time
+				useLastAccessTimeouts = true,
+				reapFrequency = 2,
+				freeMemoryPercentageThreshold = 0,
+				evictionPolicy = "LRU",
+				evictCount = 5,
+				maxObjects = 5000,
+				objectStore = "ConcurrentStore", //guaranteed objects
+				coldboxEnabled = true
+			};
+		} else {
+			cacheBox[ "jdbc" ] = {
+				provider 	= "coldbox.system.cache.providers.CacheBoxProvider",
+				properties 	= {
+					objectDefaultTimeout = 120,
+					objectDefaultLastAccessTimeout = 30,
+					useLastAccessTimeouts = true,
+					reapFrequency = 2,
+					evictionPolicy = "LRU",
+					evictCount = 5,
+					maxObjects = 1000,
+					objectStore = "JDBCStore",
+					dsn   = "contentbox",
+					table = "cachebox_content"
+				}
+			}
+		}
 	}	
 
 }
