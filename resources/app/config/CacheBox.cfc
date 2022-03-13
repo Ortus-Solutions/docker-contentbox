@@ -69,7 +69,7 @@ component{
 			}		
 		};
 
-		if( getSystemSetting( "EXPRESS", false ) ){
+		if( request.$coldboxUtil.getSystemSetting( "EXPRESS", false ) ){
 			cacheBox[ "express" ] = {
 				objectDefaultTimeout = 120, //two hours default
 				objectDefaultLastAccessTimeout = 30, //30 minutes idle time
