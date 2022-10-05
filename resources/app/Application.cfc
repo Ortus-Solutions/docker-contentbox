@@ -82,11 +82,16 @@ component {
 	 * - Dialect is incredibly important! Do not let Hibernate auto configur it, you can get nasty errors.
 	 * So Make sure you select one.
 	 */
-	
+
 	/**
 	* Custom Datasource Dynamic configs before ORM definitions exist.
 	**/
 	include "config/datasourceMixins.cfm";
+
+	// Normal ContentBox ENV Loading
+	if( this._loadDynamicEnvironment ){
+		loadEnv();
+	}
 
 	// THE CONTENTBOX DATASOURCE NAME
 	this.datasource  = request.$coldboxUtil.getSystemSetting( "DATASOURCE_NAME", "contentbox" );

@@ -1,72 +1,96 @@
 ﻿/**
-* ContentBox - A Modular Content Platform
-* Copyright since 2012 by Ortus Solutions, Corp
-* www.ortussolutions.com/products/contentbox
-* ---
-* CacheBox Configuration
-*/
-component{
-	
+ * ContentBox - A Modular Content Platform
+ * Copyright since 2012 by Ortus Solutions, Corp
+ * www.ortussolutions.com/products/contentbox
+ * ---
+ * CacheBox Configuration
+ */
+component {
+
 	/**
-	* Configure CacheBox for ColdBox Application Operation
-	*/
+	 * Configure CacheBox for ColdBox Application Operation
+	 */
 	function configure(){
-		
-		// The CacheBox configuration structure DSL
+		/**
+		 * --------------------------------------------------------------------------
+		 * CacheBox Configuration (https://cachebox.ortusbooks.com)
+		 * --------------------------------------------------------------------------
+		 */
 		cacheBox = {
-			// LogBox config already in coldbox app, not needed
-			// logBoxConfig = "coldbox.system.web.config.LogBox", 
-			
-			// The defaultCache has an implicit name "default" which is a reserved cache name
-			// It also has a default provider of cachebox which cannot be changed.
-			// All timeouts are in minutes
-			defaultCache = {
-				objectDefaultTimeout = 120, //two hours default
-				objectDefaultLastAccessTimeout = 30, //30 minutes idle time
-				useLastAccessTimeouts = true,
-				reapFrequency = 2,
-				freeMemoryPercentageThreshold = 0,
-				evictionPolicy = "LRU",
-				evictCount = 5,
-				maxObjects = 5000,
-				objectStore = "ConcurrentStore", //guaranteed objects
-				coldboxEnabled = true
+			/**
+			 * --------------------------------------------------------------------------
+			 * Default Cache Configuration
+			 * --------------------------------------------------------------------------
+			 * The defaultCache has an implicit name "default" which is a reserved cache name
+			 * It also has a default provider of cachebox which cannot be changed.
+			 * All timeouts are in minutes
+			 */
+			defaultCache : {
+				objectDefaultTimeout           : 120, // two hours default
+				objectDefaultLastAccessTimeout : 30, // 30 minutes idle time
+				useLastAccessTimeouts          : true,
+				reapFrequency                  : 5,
+				freeMemoryPercentageThreshold  : 0,
+				evictionPolicy                 : "LRU",
+				evictCount                     : 5,
+				maxObjects                     : 5000,
+				objectStore                    : "ConcurrentStore", // guaranteed objects
+				coldboxEnabled                 : true
 			},
-			// Register all the custom named caches you like here
-			caches = {
-				// Named cache for all coldbox event and view template caching
-				template = {
-					provider = "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
-					properties = {
-						objectDefaultTimeout = 120,
-						objectDefaultLastAccessTimeout = 30,
-						useLastAccessTimeouts = true,
-						freeMemoryPercentageThreshold = 0,
-						reapFrequency = 2,
-						evictionPolicy = "LRU",
-						evictCount = 5,
-						maxObjects = 5000,
-						objectStore = "ConcurrentSoftReferenceStore" //memory sensitive
+			/**
+			 * --------------------------------------------------------------------------
+			 * Custom Cache Regions
+			 * --------------------------------------------------------------------------
+			 * You can use this section to register different cache regions and map them
+			 * to different cache providers
+			 */
+			caches : {
+				/**
+				 * --------------------------------------------------------------------------
+				 * ColdBox Template Cache
+				 * --------------------------------------------------------------------------
+				 * The ColdBox Template cache region is used for event/view caching and
+				 * other internal facilities that might require a more elastic cache.
+				 */
+				template : {
+					provider   : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
+					properties : {
+						objectDefaultTimeout           : 120,
+						objectDefaultLastAccessTimeout : 30,
+						useLastAccessTimeouts          : true,
+						freeMemoryPercentageThreshold  : 0,
+						reapFrequency                  : 5,
+						evictionPolicy                 : "LRU",
+						evictCount                     : 5,
+						maxObjects                     : 5000,
+						objectStore                    : "ConcurrentSoftReferenceStore" // memory sensitive
 					}
 				},
-				
-				// ContentBox Sessions
-				sessions = 	{
-					provider = "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
-					properties = {
-						objectDefaultTimeout = 60,
-						objectDefaultLastAccessTimeout = 0,
-						useLastAccessTimeouts = false,
-						reapFrequency = 2,
-						evictionPolicy = "LRU",
-						evictCount = 5,
-						maxObjects = 1000,
-						objectStore = "JDBCStore",
-						dsn   = "contentbox",
-						table = "cachebox_sessions"
+
+				/**
+				 * --------------------------------------------------------------------------
+				 * ContentBox Sessions
+				 * --------------------------------------------------------------------------
+				 * Sessions are managed by CacheBox and not CFML so we can distribute to any
+				 * cache provider.
+				 */
+				sessions : 	{
+					provider : "coldbox.system.cache.providers.CacheBoxColdBoxProvider",
+					properties : {
+						objectDefaultTimeout 			: 60,
+						objectDefaultLastAccessTimeout  : 0,
+						useLastAccessTimeouts 			: false,
+						freeMemoryPercentageThreshold   : 0,
+						reapFrequency                   : 5,
+						evictionPolicy                  : "LRU",
+						evictCount 						: 5,
+						maxObjects 						: 5000,
+						objectStore 					: "JDBCStore",
+						dsn   							: "contentbox",
+						table 							: "cachebox_sessions"
 					}
 				}
-			}		
+			}
 		};
 
 		if( request.$coldboxUtil.getSystemSetting( "EXPRESS", false ) ){
@@ -74,7 +98,7 @@ component{
 				objectDefaultTimeout = 120, //two hours default
 				objectDefaultLastAccessTimeout = 30, //30 minutes idle time
 				useLastAccessTimeouts = true,
-				reapFrequency = 2,
+				reapFrequency = 5,
 				freeMemoryPercentageThreshold = 0,
 				evictionPolicy = "LRU",
 				evictCount = 5,
@@ -89,16 +113,16 @@ component{
 					objectDefaultTimeout = 120,
 					objectDefaultLastAccessTimeout = 30,
 					useLastAccessTimeouts = true,
-					reapFrequency = 2,
+					reapFrequency = 5,
 					evictionPolicy = "LRU",
 					evictCount = 5,
-					maxObjects = 1000,
+					maxObjects = 5000,
 					objectStore = "JDBCStore",
 					dsn   = "contentbox",
 					table = "cachebox_content"
 				}
 			}
 		}
-	}	
+	}
 
 }
