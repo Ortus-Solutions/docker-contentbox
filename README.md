@@ -21,7 +21,7 @@ The following tags are based off our image's `master` branch and are production-
 We attach the two versions because we could have the same ContentBox version but an updated image version.
 
 * `:latest` - The latest stable version of both ContentBox and our image
-* `:{imageVersion}` - Specific ContentBox and Image Version ( e.g. `:5.5.0` )
+* `:{imageVersion}` - Specific ContentBox and Image Version ( e.g. `:5.6.0` )
 * `:alpine` - Latest stable version based off Alpine Linux
 * `:lucee5` - Latest stable version of this image with Lucee 5 warmed up
 * `:adobe2021` - Latest stable version of this image with Adobe 2018 warmed up

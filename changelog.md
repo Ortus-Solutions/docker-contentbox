@@ -4,6 +4,17 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ----
+## [5.6.0] - 2022-03-12
+
+### Changed
+
+* Updated CommandBox Image to v3.6.3 ( CommandBox v5.6.1 )
+* Updated build architectures to support v7 ARM variant
+* Updated ContentBox to v5.6.1
+
+### Added
+* Added `commandbox-migrations` module to build
+* Added `CONTENTBOX_MIGRATE` environment variable to allow for automatic migrations to be performed on server start
 
 ## [5.5.0] - 2022-03-12
 
@@ -14,7 +25,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 * Updated ContentBox to v5.0.3
 * Added github release flow
 
-----
 
 ## [5.0.0] - 2020-03-11
 

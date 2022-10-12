@@ -62,11 +62,20 @@ if [[ $REMOVE_CBADMIN ]] && [[ $REMOVE_CBADMIN == true ]]; then
 fi
 
 #######################################################################################
+# CONTENTBOX_MIGRATE
+# If true, then run any outstanding migrations
+#######################################################################################
+if [[ $CONTENTBOX_MIGRATE ]] && [[ $CONTENTBOX_MIGRATE == true ]]; then
+	echo ">INFO: Running any outstanding ContentBox migrations..."
+	cd $APP_DIR && box migrate up migrationsDirectory=modules/contentbox/migrations
+fi
+
+#######################################################################################
 # Media Directory
 # Check for path environment variables and then apply convention routes to them if not specified
 #######################################################################################
 if [[ ! $contentbox_default_cb_media_directoryRoot ]]; then
-	export contentbox_default_cb_media_directoryRoot=/app/modules_app/contentbox-custom/_content 
+	export contentbox_default_cb_media_directoryRoot=/app/modules_app/contentbox-custom/_content
 fi
 # Create media directory, just in case.
 mkdir -p $contentbox_default_cb_media_directoryRoot

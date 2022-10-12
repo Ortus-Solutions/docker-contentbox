@@ -9,7 +9,7 @@ LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
 LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 
 # Incoming Secrets/Vars From Build Process
-ARG IMAGE_VERSION=5.5.0
+ARG IMAGE_VERSION=5.6.0
 ARG TAGS=ortussolutions/contentbox:test
 
 # Copy over our app resources which brings lots of goodness like session distribution,

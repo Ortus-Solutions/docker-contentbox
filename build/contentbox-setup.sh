@@ -13,6 +13,10 @@ echo "${TAGS} - ${IMAGE_VERSION} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
 echo ">INFO: Latest Stable Release installation specified."
 box install contentbox-installer --production
 
+# Install Commandbox Migrations module
+echo ">INFO: Installing CommandBox Migrations module."
+box install commandbox-migrations
+
 # Remove DSN creator no need to use it
 rm -Rf ${APP_DIR}/modules/contentbox-dsncreator
 # Remove unecessary apidocs
