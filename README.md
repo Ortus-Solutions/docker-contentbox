@@ -163,6 +163,7 @@ A number of environment variables, specific to the ContentBox image, are availab
 
 * `EXPRESS=true` - Uses an H2, in-memory database. Useful for very small sites or for testing the image. See [http://www.h2database.com/html/main.html](http://www.h2database.com/html/main.html)
 * `INSTALL=true` - Adds the installer module at runtime, to assist in configuring your installation. You would omit this from your `run` command, once your database has been configured
+* `CONTENTBOX_MIGRATE=true` - Will perform a check and run any necessary contentbox version migrations prior to the startup of the container
 * `BE=true` - Uses the **bleeding edge** snapshot of the ContentBox CMS, else we will defer to the **latest stable** version of ContentBox.
 * `HEALTHCHECK_URI` - Specifies the URI endpoint for container health checks.  By default, this is set `http://127.0.0.1:${PORT}/` at 1 minute intervals with 5 retries and a timeout of 30s
 * `FWREINIT_PW` - Allows you to specify the reinit password for the ColdBox framework
