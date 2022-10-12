@@ -27,7 +27,7 @@ jobs:
 
           # Alpine builds
           # Note: No JDK builders currently support alpine with ARM
-          - BUILD_IMAGE_DOCKERFILE : variants/Alpine.Dockerfile 
+          - BUILD_IMAGE_DOCKERFILE : variants/Alpine.Dockerfile
             BUILD_IMAGE_TAG: alpine
     steps:
       - name: Checkout
@@ -46,9 +46,9 @@ jobs:
         id: setup
         env:
           DOCKER_IMAGE : ortussolutions/contentbox
-          BUILD_IMAGE_TAG: ${{ matrix.BUILD_IMAGE_TAG }} 
+          BUILD_IMAGE_TAG: ${{ matrix.BUILD_IMAGE_TAG }}
           IMAGE_VERSION: 5.5.0
-        run: | 
+        run: |
           # Tag Builds
           if [[ $GITHUB_REF == refs/tags/* ]]; then
 
@@ -62,7 +62,7 @@ jobs:
 
             # Snapshot builds
             BUILD_IMAGE_TAG="${BUILD_IMAGE_TAG}-snapshot"
-          
+
           fi
 
           TAGS="${DOCKER_IMAGE}:${BUILD_IMAGE_TAG}"
@@ -70,14 +70,14 @@ jobs:
           if [[ ${BUILD_IMAGE_TAG} == *"alpine"* ]]; then
             ARCH_PLATFORMS=linux/amd64
           else
-            ARCH_PLATFORMS=linux/amd64,linux/arm64
+            ARCH_PLATFORMS=linux/amd64,linux/arm64/v8,linux/arm/v7
           fi
 
-          
+
           # Set output parameters.
           echo ::set-output name=arch_platforms::${ARCH_PLATFORMS}
           echo ::set-output name=image_version::${IMAGE_VERSION}
-          echo ::set-output name=tags::${TAGS}  
+          echo ::set-output name=tags::${TAGS}
 
       - name: DockerHub Login
         if: github.event_name != 'pull_request'
@@ -97,5 +97,5 @@ jobs:
           build-args: IMAGE_VERSION=${{ steps.setup.outputs.image_version }},TAGS=${{ steps.setup.outputs.tags }}
           platforms: ${{ steps.setup.outputs.arch_platforms }}
           push: true
-          tags: ${{ steps.setup.outputs.tags }}    
+          tags: ${{ steps.setup.outputs.tags }}
 
