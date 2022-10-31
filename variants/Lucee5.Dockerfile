@@ -7,7 +7,7 @@ LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
 LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 
 # Hard Code our engine environment
-ENV CFENGINE lucee@5.2
+ENV CFENGINE lucee@5.3.9+160
 
 # WARM UP THE SERVER
 RUN ${BUILD_DIR}/util/warmup-server.sh
