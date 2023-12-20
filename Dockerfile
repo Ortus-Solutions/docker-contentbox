@@ -1,6 +1,7 @@
 # Seed it on a specific CommandBox Image Version
 # https://hub.docker.com/r/ortussolutions/commandbox/tags
-FROM ortussolutions/commandbox
+ARG BASE_IMAGE=ortussolutions/commandbox
+FROM ${BASE_IMAGE}
 
 # Labels
 LABEL version="@version@"
@@ -9,8 +10,9 @@ LABEL maintainer "Luis Majano <lmajano@ortussolutions.com>"
 LABEL repository "https://github.com/Ortus-Solutions/docker-contentbox"
 
 # Incoming Secrets/Vars From Build Process
-ARG IMAGE_VERSION=5.6.0
+ARG IMAGE_VERSION=6.0.1
 ARG TAGS=ortussolutions/contentbox:test
+ARG CFENGINE=lucee@5.4.4+38
 
 # Copy over our app resources which brings lots of goodness like session distribution,
 # db env vars, caching, etc.
@@ -27,6 +29,9 @@ RUN ${BUILD_DIR}/contentbox/contentbox-setup.sh
 
 # ContentBox Run
 CMD ${BUILD_DIR}/contentbox/contentbox-run.sh
+
+# WARM UP THE SERVER
+RUN ${BUILD_DIR}/util/warmup-server.sh
 
 # Healthcheck environment variables
 ENV HEALTHCHECK_URI "http://127.0.0.1:${PORT}/index.cfm"

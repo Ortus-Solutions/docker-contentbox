@@ -1,0 +1,6 @@
+{
+    "JVM":{
+        "heapSize":"1024",
+		"args": "-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+    }
+}

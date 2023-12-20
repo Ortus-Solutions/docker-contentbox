@@ -1,0 +1,9 @@
+{
+    "JVM":{
+        "heapSize":"1024",
+        "args":"-Dfile.encoding=UTF8 -Dcom.sun.net.ssl.enableECC=false"
+    },
+    "scripts":{
+        "onServerInstall":"cfpm install adminapi,administrator,sqlserver,postgresql,mysql,zip,spreadsheet,pdf,htmltopdf,image,document,mail,redissessionstorage,caching,chart,orm,debugger,ajax"
+    }
+}

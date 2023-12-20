@@ -30,7 +30,27 @@ rm -f ${APP_DIR}/server.json
 
 # Copy over our resources
 echo ">INFO: Copying over ContentBox Container Overrides"
-cp -rvf ${BUILD_DIR}/contentbox-app/* ${APP_DIR}
+cp -rvf ${BUILD_DIR}/contentbox-app/config/* ${APP_DIR}/config/
+cp -vf ${BUILD_DIR}/contentbox-app/Application.cfc ${APP_DIR}/Application.cfc
+
+SERVER_FILE=${BUILD_DIR}/contentbox-app/engines/server-lucee@5.json
+
+case $CFENGINE in
+
+	adobe@2018)
+	  SERVER_FILE=${BUILD_DIR}/contentbox-app/engines/server-adobe@2018.json
+	;;
+
+	adobe@2021)
+	  SERVER_FILE=${BUILD_DIR}/contentbox-app/engines/server-adobe@2021.json
+	;;
+
+	adobe@2023)
+	  SERVER_FILE=${BUILD_DIR}/contentbox-app/engines/server-adobe@2023.json
+	;;
+esac
+
+cp -vf $SERVER_FILE ${APP_DIR}/server.json
 
 # Debug the App Dir
 #echo "Final App Dir"

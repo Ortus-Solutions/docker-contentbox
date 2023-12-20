@@ -14,21 +14,26 @@ jobs:
     strategy:
       matrix:
         include:
-          - BUILD_IMAGE_DOCKERFILE : Dockerfile
+          - BASE_IMAGE: ortussolutions/commandbox
             BUILD_IMAGE_TAG: latest
-          - BUILD_IMAGE_DOCKERFILE : variants/Lucee5.Dockerfile
+            CFENGINE: lucee@5.4.4+38
+          - BASE_IMAGE: ortussolutions/commandbox
             BUILD_IMAGE_TAG: lucee5
-          - BUILD_IMAGE_DOCKERFILE : variants/Adobe2016.Dockerfile
-            BUILD_IMAGE_TAG: adobe2016
-          - BUILD_IMAGE_DOCKERFILE : variants/Adobe2018.Dockerfile
+            CFENGINE: lucee@5.4.4+38
+          - BASE_IMAGE: ortussolutions/commandbox:adobe2018
             BUILD_IMAGE_TAG: adobe2018
-          - BUILD_IMAGE_DOCKERFILE : variants/Adobe2021.Dockerfile
+            CFENGINE: adobe@2018
+          - BASE_IMAGE: ortussolutions/commandbox:adobe2021
             BUILD_IMAGE_TAG: adobe2021
-
+            CFENGINE: adobe@2021
+          - BASE_IMAGE: ortussolutions/commandbox:adobe2023
+            BUILD_IMAGE_TAG: adobe2023
+            CFENGINE: adobe@2023
           # Alpine builds
           # Note: No JDK builders currently support alpine with ARM
-          - BUILD_IMAGE_DOCKERFILE : variants/Alpine.Dockerfile
+          - BASE_IMAGE: ortussolutions/commandbox:alpine
             BUILD_IMAGE_TAG: alpine
+            CFENGINE: lucee@5.4.4+38
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -47,7 +52,7 @@ jobs:
         env:
           DOCKER_IMAGE : ortussolutions/contentbox
           BUILD_IMAGE_TAG: ${{ matrix.BUILD_IMAGE_TAG }}
-          IMAGE_VERSION: 5.6.1
+          IMAGE_VERSION: 6.0.1
         run: |
           # Tag Builds
           if [[ $GITHUB_REF == refs/tags/* ]]; then
