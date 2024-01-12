@@ -1,5 +1,5 @@
 #!/bin/bash
-set -e
+set -ex
 
 # Move into CommandBox image work dir
 cd ${APP_DIR}
@@ -26,7 +26,18 @@ if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then
 		mkdir -p ${H2_DIR}
 	fi
 
-	echo ">INFO: H2 Database set to ${H2_DIR}"
+	echo ">INFO: H2 Database set to ${H2_DIR}/contentbox"
+
+	touch /app/.env
+	printf "DB_CONNECTIONSTRING=jdbc:hsqldb:file:$H2_DIR/contentbox;sql.ignore_case=true\n" >> /app/.env
+	printf "DB_BUNDLEVERSION=2.7.2.jdk11\n" >> /app/.env
+	printf "DB_BUNDLENAME=org.lucee.hsqldb\n" >> /app/.env
+	printf "DB_CLASS=org.hsqldb.jdbc.JDBCDriver\n" >> /app/.env
+	printf "DB_DATABASE=contentbox\n" >> /app/.env
+	printf "DB_USER=SA\n" >> /app/.env
+	printf "DB_PASSWORD=\n" >> /app/.env
+	printf "DB_GRAMMAR=MySQLGrammar@qb\n" >> /app/.env
+
 
 	#check for a lock file and remove it so we can start up
 	if [[ -f ${H2_DIR}/contentbox.lck ]]; then
@@ -61,14 +72,6 @@ if [[ $REMOVE_CBADMIN ]] && [[ $REMOVE_CBADMIN == true ]]; then
 	rm -rf ${APP_DIR}/modules/contentbox/modules/contentbox-admin
 fi
 
-#######################################################################################
-# CONTENTBOX_MIGRATE
-# If true, then run any outstanding migrations
-#######################################################################################
-if [[ $CONTENTBOX_MIGRATE ]] && [[ $CONTENTBOX_MIGRATE == true ]]; then
-	echo ">INFO: Running any outstanding ContentBox migrations..."
-	cd $APP_DIR && box migrate up migrationsDirectory=modules/contentbox/migrations
-fi
 
 #######################################################################################
 # Media Directory
@@ -82,5 +85,8 @@ mkdir -p $contentbox_default_cb_media_directoryRoot
 echo ">INFO: Contentbox media root set as ${contentbox_default_cb_media_directoryRoot}"
 echo "==> ContentBox Environment Finalized"
 
-# Run CommandBox Server Now
-${BUILD_DIR}/run.sh
+#######################################################################################
+# CONTENTBOX_MIGRATE AND RUN - Fail if migrations do not execute
+#######################################################################################
+echo ">INFO: Running any outstanding ContentBox migrations..."
+cd $APP_DIR && box migrate install manager=contentbox && box migrate up manager=contentbox && ${BUILD_DIR}/run.sh

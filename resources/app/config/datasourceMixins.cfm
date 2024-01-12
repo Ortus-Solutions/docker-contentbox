@@ -4,18 +4,18 @@
 
 	// Express H2SQL Database
 	if( isExpress ){
-
-		dbDirectory = request.$envHelper.getSystemSetting( "H2_DIR", '/data/contentbox/db' );
-
+		this.ormSettings[ "dialect" ] = "org.hibernate.dialect.MySQL5InnoDBDialect";
 		datasourceConfig = {
-			class 			 	: 'org.h2.Driver',
-			connectionString 	: 'jdbc:h2:' & dbDirectory & '/contentbox;MODE=MySQL',
-			storage			 	: true,
-			clob 				: true,
-			blob 				: true
+			class           : request.$envHelper.getSystemSetting( "DB_CLASS" ),
+			connectionString: request.$envHelper.getSystemSetting( "DB_CONNECTION_STRING" ),
+			bundleName      : request.$envHelper.getSystemSetting( "DB_BUNDLENAME" ),
+			bundleVersion   : request.$envHelper.getSystemSetting( "DB_BUNDLEVERSION" ),
+			username        : request.$envHelper.getSystemSetting( "DB_USER", "" ),
+			username        : request.$envHelper.getSystemSetting( "DB_PASSWORD", "" ),
+			storage         : true,
+			clob 			: true,
+			blob 			: true
 		};
-
-		this.ormSettings[ "dialect" ] = "MySQL";
 	}
 	// Else traditional RDBMS
 	else {

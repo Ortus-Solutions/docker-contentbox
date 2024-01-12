@@ -9,6 +9,8 @@ TIMESTAMP=`date "+%Y-%m-%d %H:%M:%S"`
 echo ">INFO: Creating Image Version File - ${TAGS} - ${IMAGE_VERSION} at ${TIMESTAMP} > ${APP_DIR}/.image-version"
 echo "${TAGS} - ${IMAGE_VERSION} at ${TIMESTAMP}" > ${APP_DIR}/.image-version
 
+export LUCEE_EXTENSIONS=D062D72F-F8A2-46F0-8CBC91325B2F067B,6DD4728A-AB0C-4F67-9DCE1A91A8ACD114
+
 # Install ContentBox Latest Stable
 echo ">INFO: Latest Stable Release installation specified."
 box install contentbox-installer --production
@@ -27,6 +29,10 @@ mkdir -p ${APP_DIR}/modules_app
 
 # Ensure no server.json file exists
 rm -f ${APP_DIR}/server.json
+
+# Remove the example env file so it doesn't get placed as the actual .env at runtime
+rm -f ./.env.example
+rm -f ./.env
 
 # Copy over our resources
 echo ">INFO: Copying over ContentBox Container Overrides"
