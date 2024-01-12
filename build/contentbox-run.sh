@@ -34,7 +34,7 @@ if [[ $EXPRESS ]] && [[ $EXPRESS == true ]]; then
 	printf "DB_BUNDLENAME=org.lucee.hsqldb\n" >> /app/.env
 	printf "DB_CLASS=org.hsqldb.jdbc.JDBCDriver\n" >> /app/.env
 	printf "DB_DATABASE=contentbox\n" >> /app/.env
-	printf "DB_USER=SA\n" >> /app/.env
+	printf "DB_USER=sa\n" >> /app/.env
 	printf "DB_PASSWORD=\n" >> /app/.env
 	printf "DB_GRAMMAR=MySQLGrammar@qb\n" >> /app/.env
 
@@ -89,4 +89,4 @@ echo "==> ContentBox Environment Finalized"
 # CONTENTBOX_MIGRATE AND RUN - Fail if migrations do not execute
 #######################################################################################
 echo ">INFO: Running any outstanding ContentBox migrations..."
-cd $APP_DIR && box migrate install manager=contentbox && box migrate up manager=contentbox && ${BUILD_DIR}/run.sh
+cd $APP_DIR && box migrate install --verbose manager=contentbox && box migrate up  --verbose manager=contentbox && ${BUILD_DIR}/run.sh

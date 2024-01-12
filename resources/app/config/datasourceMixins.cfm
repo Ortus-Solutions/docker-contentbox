@@ -12,6 +12,7 @@
 			bundleVersion   : request.$envHelper.getSystemSetting( "DB_BUNDLEVERSION" ),
 			username        : request.$envHelper.getSystemSetting( "DB_USER", "" ),
 			username        : request.$envHelper.getSystemSetting( "DB_PASSWORD", "" ),
+			database        : request.$envHelper.getSystemSetting( "DB_DATABASE", "" ),
 			storage         : true,
 			clob 			: true,
 			blob 			: true
